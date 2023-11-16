@@ -9,7 +9,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,//senha do banco de dados
     database: process.env.DB_NAME,//nome do banco de dados que vai utilizar no projeto
     define: {
-    timestamps: true,//data de crição e data de alteração
+    timestamps: false,//data de crição e data de alteração
     underscored: true
     
     }

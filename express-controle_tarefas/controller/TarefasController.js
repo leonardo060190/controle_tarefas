@@ -51,7 +51,7 @@ module.exports = {
             descricao = ?,
             id_status = ?,
             data_criacao = ?,
-            data_limite = ?
+            data_limite = ?,
             updated_at = ? 
         WHERE 
             titulo = ?`,
@@ -108,9 +108,10 @@ module.exports = {
                 descricao,
                 id_status,
                 data_criacao,
-                data_limite
+                data_limite,
+                updated_at
                 )
-        VALUES (?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, ?)`,
             {
                 replacements:
                     [
@@ -118,7 +119,8 @@ module.exports = {
                         req.body.descricao,
                         req.body.id_status,
                         req.body.data_criacao,
-                        req.body.data_limite
+                        req.body.data_limite,
+                        req.body.updated_at
                        
                     ]
 

@@ -8,6 +8,7 @@ class tarefa extends Model {
             id_status: DataTypes.INTEGER,
             data_criacao: DataTypes.DATE,
             data_limite: DataTypes.DATE,
+            updated_at: DataTypes.DATE
         },{
            sequelize 
         })
