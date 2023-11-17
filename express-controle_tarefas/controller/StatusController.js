@@ -8,7 +8,14 @@ module.exports = {
     async index(req, res) {
         await Status.sequelize.query(`SELECT * FROM status ORDER BY tipo `)
             .then(([results, metadata]) => {
-                res.json(results);
+                if (results.length > 0) {
+                    res.json(results);
+                } else {
+                    res.status(404).json({
+                        success: false,
+                        message: "Não há cadastros",
+                    });
+                }
             }).catch((error) => {
                 res.status(500).json({
                     success: false,
