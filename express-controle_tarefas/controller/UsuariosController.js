@@ -27,8 +27,8 @@ module.exports = {
 
     // método para busca do Usuário, referente ao nome informado
     async buscaNome(req, res) {
-        await Usuarios.sequelize.query(`SELECT nome, sobrenome FROM usuarios WHERE nome = ?`,
-            { replacements: [req.params.nome] })
+        await Usuarios.sequelize.query(`SELECT nome, sobrenome FROM usuarios WHERE nome LIKE ? `,
+            { replacements: [`%${req.params.nome}%`] })
             .then(([results, metadata]) => {
                 if (results.length === 0) {
                     res.status(404).json({

@@ -19,6 +19,8 @@ const usuarioRouter = require('./routes/Usuarios');
 const statuRouter = require('./routes/Status');
 // Este módulo é responsável por importar as rotas relacionadas a tarefas
 const tarefaRouter = require('./routes/Tarefas');
+// Este módulo é responsável por importar as rotas relacionadas a Usuario_tarefas
+const Usuario_tarefasRouter = require('./routes/Usuario_tarefas');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -52,6 +54,8 @@ app.use(usuarioRouter);
 app.use(statuRouter);
 //trata as rotas relacionadas às tarefas.
 app.use(tarefaRouter);
+//trata as rotas relacionadas às Usuario_tarefas.
+app.use(Usuario_tarefasRouter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

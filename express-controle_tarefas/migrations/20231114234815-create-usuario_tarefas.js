@@ -13,6 +13,7 @@ module.exports = {
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: 'Usuarios',
           key: 'id'
@@ -21,6 +22,7 @@ module.exports = {
       id_tarefa: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: 'Tarefas',
           key: 'id'

@@ -8,7 +8,7 @@ module.exports = {
     async index(req, res) {
         await Status.sequelize.query(`SELECT * FROM status ORDER BY tipo `)
             .then(([results, metadata]) => {
-                if (results.length > 0) {
+               if (results.length > 0) {
                     res.json(results);
                 } else {
                     res.status(404).json({

@@ -5,18 +5,19 @@ const Sequelize = require('sequelize');
 //Este arquivo contém os parâmetros de conexão do banco de dados
 const dbConfig = require('../config/db');
 
-//importa o Usuariosmodelo do ../models/usuarioarquivo.
+//importa o Usuariosmodelo do ../models/usuario.
 //Este modelo representa a tabela usuarios no banco de dados.
 const Usuarios = require('../models/usuario');
 
-//importa o Tarefamodelo do ../models/tarefaarquivo.
+//importa o Tarefamodelo do ../models/tarefa.
 //Este modelo representa a tabela tarefas no banco de dados.
 const Tarefa = require('../models/tarefa');
 
+//importa o Tarefamodelo do ../models/Usuario_tarefa.
+//Este modelo representa a tabela tarefas no banco de dados.
+const Usuario_tarefas = require('../models/Usuario_tarefa');
 
-//const Usuario_tarefas = require('../models/Usuario_tarefas');
-
-//importa o Statusmodelo do ../models/statuarquivo.
+//importa o Statusmodelo do ../models/statu.
 //Este modelo representa a tabela status no banco de dados.
 const Status = require('../models/statu');
 
@@ -30,7 +31,7 @@ const connection = new Sequelize(dbConfig);
 // Isso prepara o modelo para interagir com as tabelas, no banco de dados.
 Usuarios.init(connection);
 Tarefa.init(connection);
-//Usuario_tarefas.init(connection);
+Usuario_tarefas.init(connection);
 Status.init(connection);
 
 

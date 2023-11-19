@@ -27,8 +27,8 @@ module.exports = {
 
     // método que busca as tarefas referente ao titulo informado
     async buscaTitulo(req, res) {
-        await Tarefas.sequelize.query(`SELECT * FROM tarefas WHERE titulo = ?`,
-            { replacements: [req.params.titulo] })
+        await Tarefas.sequelize.query(`SELECT * FROM tarefas WHERE titulo LIKE ?`,
+            { replacements: `%${req.params.titulo}%`})
             .then(([results, metadata]) => {
                 if (results.length === 0) {
                     res.status(404).json({
@@ -127,7 +127,7 @@ module.exports = {
                         req.body.id_status,
                         req.body.data_criacao,
                         req.body.data_limite,
-                        req.body.updated_at
+                        new Date()
                        
                     ]
 
