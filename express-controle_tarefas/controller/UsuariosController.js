@@ -54,13 +54,13 @@ module.exports = {
     async update(req, res) {
         await Usuarios.sequelize.query(
             `UPDATE usuarios SET 
-            nome = ?,
-            sobrenome = ?,
-            senha = ?,
-            email = ?,
-            updated_at = ? 
-        WHERE 
-            email = ?`,
+                nome = ?,
+                sobrenome = ?,
+                senha = ?,
+                email = ?,
+                updated_at = ? 
+            WHERE 
+                email = ?`,
             {
                 replacements: [
                     req.body.nome,
@@ -116,7 +116,7 @@ module.exports = {
                 created_at,
                 updated_at
             )
-        VALUES (?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?)`,
             {
                 replacements:
                     [

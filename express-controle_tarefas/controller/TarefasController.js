@@ -54,14 +54,14 @@ module.exports = {
     async update(req, res) {
         await Tarefas.sequelize.query(
             `UPDATE tarefas SET 
-            titulo = ?,
-            descricao = ?,
-            id_status = ?,
-            data_criacao = ?,
-            data_limite = ?,
-            updated_at = ? 
-        WHERE 
-            titulo = ?`,
+                titulo = ?,
+                descricao = ?,
+                id_status = ?,
+                data_criacao = ?,
+                data_limite = ?,
+                updated_at = ? 
+            WHERE 
+                titulo = ?`,
             {
                 replacements: [
                     req.body.titulo,
@@ -118,7 +118,7 @@ module.exports = {
                 data_limite,
                 updated_at
                 )
-        VALUES (?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?)`,
             {
                 replacements:
                     [

@@ -23,48 +23,8 @@ module.exports = {
                 });
             });
     },
-    // ////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    // // autera os dados que for refente os id informado
-    // async update(req, res) {
-    //     await Status.sequelize.query(
-    //         `UPDATE status SET 
-    //         tipo = ?,
-    //         created_at = ?,
-    //         updated_at = ? 
-    //     WHERE 
-    //         tipo = ?`,
-    //         {
-    //             replacements: [
-    //                 req.body.tipo,
-    //                 new Date(),
-    //                 new Date(),
-    //                 req.params.tipo
-    //             ]
-    //         }
-    //     )
-    //         .then(([results, metadata]) => {
-    //             if (metadata.affectedRows === 0) {
-    //                 res.status(404).json({
-    //                     success: false,
-    //                     message: "Status não encontrado",
-    //                 });
-    //             } else {
-    //                 res.json({
-    //                     success: true,
-    //                     message: "Cadastro atualizado com Status",
-    //                 });
-    //             }
-    //         }).catch((error) => {
-    //             res.status(500).json({
-    //                 success: false,
-    //                 message: error.message,
-    //             });
-    //         });
-
-    // },
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //metodo que insere um novo status na tabela
     async store(req, res) {
@@ -85,7 +45,7 @@ module.exports = {
                 created_at,
                 updated_at
             )
-        VALUES (?, ?, ?)`,
+            VALUES (?, ?, ?)`,
             {
                 replacements:
                     [
