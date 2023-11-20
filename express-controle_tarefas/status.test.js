@@ -19,7 +19,7 @@ describe('StatusController', () => {
         });
 
         // Import and call the StatusController's index method
-        const controller = require('./controller/statusController');
+        const controller = require('./controller/StatusController');
         const response = await controller.index();
 
         // Verify the response status code and body
@@ -35,7 +35,7 @@ describe('StatusController', () => {
         });
 
         // Import and call the StatusController's index method
-        const controller = require('./controller/statusController');
+        const controller = require('./controller/StatusController');
         const response = await controller.index();
 
         // Verify the response status code and error message
