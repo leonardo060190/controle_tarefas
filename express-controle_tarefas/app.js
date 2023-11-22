@@ -29,9 +29,7 @@ const app = express();
 //Importa o arquivo de configuração do banco de dados
 require('./config/db');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+
 
 //configura o criador de logs do Morgan para usar o formato 'dev'
 app.use(logger('dev'));

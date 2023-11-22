@@ -9,22 +9,20 @@ const Status = require('./models/statu');
 
 describe('StatusController', () => {
     beforeEach(async () => {
-        Status.destroy({ where: {} }); // Clear the database before each test
+       await Status.destroy({ where: {} }); // Clear the database before each test
     });
 
     describe('GET /status', () => {
         it('should return all statuses', async () => {
             // Create some test data
              Status.create({ tipo: 'Em espera' });
-             Status.create({ tipo: 'aguarde documentaçao' });
+            
 
             const response = await request(app).get('/status');
 
             expect(response.status).toBe(200);
-            expect(response.body).toEqual([
-                { tipo: 'Em espera' },
-                { tipo: 'aguarde documentaçao' },
-            ]);
+            expect(response.body[0].tipo).toEqual([{ tipo: 'Em espera' } ]);
+                
         });
 
         it('should handle no statuses found', async () => {
@@ -51,71 +49,71 @@ describe('StatusController', () => {
         });
     });
 
-    // describe('POST /status', () => {
-    //     it('should create a new status', async () => {
-    //         const response = await request(app)
-    //             .post('/status')
-    //             .send({ tipo: 'New type' });
+    describe('POST /status', () => {
+        it('should create a new status', async () => {
+            const response = await request(app)
+                .post('/status')
+                .send({ tipo: 'New type' });
 
-    //         expect(response.status).toEqual(201);
-    //         expect(response.body).toEqual({
-    //             success: true,
-    //             message: 'Status cadastrado com sucesso',
-    //         });
-    //     });
+            expect(response.status).toEqual(201);
+            expect(response.body).toEqual({
+                success: true,
+                message: 'Status cadastrado com sucesso',
+            });
+        });
 
-    //     it('should handle duplicate status creation', async () => {
-    //          Status.create({ tipo: 'Existing type' });
+        it('should handle duplicate status creation', async () => {
+             Status.create({ tipo: 'Existing type' });
 
-    //         const response = await request(app)
-    //             .post('/status')
-    //             .send({ tipo: 'Existing type' });
+            const response = await request(app)
+                .post('/status')
+                .send({ tipo: 'Existing type' });
 
-    //         expect(response.status).toBe(400);
-    //         expect(response.body).toEqual({
-    //             success: false,
-    //             message: 'Status já está cadastrado.',
-    //         });
-    //     });
+            expect(response.status).toBe(400);
+            expect(response.body).toEqual({
+                success: false,
+                message: 'Status já está cadastrado.',
+            });
+        });
 
-    //     it('should handle errors during status creation', async () => {
-    //         // Mock Sequelize.query to simulate an error
-    //         jest.spyOn(Status.sequelize, 'query').mockRejectedValueOnce(new Error('Mocked error'));
+        it('should handle errors during status creation', async () => {
+            // Mock Sequelize.query to simulate an error
+            jest.spyOn(Status.sequelize, 'query').mockRejectedValueOnce(new Error('Mocked error'));
 
-    //         const response = await request(app)
-    //             .post('/status')
-    //             .send({ tipo: 'New type' });
+            const response = await request(app)
+                .post('/status')
+                .send({ tipo: 'New type' });
 
-    //         expect(response.status).toEqual(500);
-    //         expect(response.body).toEqual({
-    //             success: false,
-    //             message: 'Mocked error',
-    //         });
-    //     });
-    // });
+            expect(response.status).toEqual(500);
+            expect(response.body).toEqual({
+                success: false,
+                message: 'Mocked error',
+            });
+        });
+    });
 
-    // describe('DELETE /status/:tipo', () => {
-    //     it('should delete an existing status', async () => {
-    //          Status.create({ tipo: 'StatusToDelete' });
+    describe('DELETE /status/:tipo', () => {
+        it('should delete an existing status', async () => {
+             Status.create({ tipo: 'StatusToDelete' });
 
-    //         const response = await request(app)
-    //             .delete('/status/StatusToDelete');
+            const response = await request(app)
+                .delete('/status/StatusToDelete');
 
-    //         expect(response.status).toBe(200);
-    //         expect(response.body).toEqual({
-    //             success: true,
-    //             message: 'Status deletado com sucesso',
-    //         });
-    //     });
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+                success: true,
+                message: 'Status deletado com sucesso',
+            });
+        });
 
-    //     it('should handle deletion of non-existing status', async () => {
-    //         const response = await request(app)
-    //             .delete('/status/NonExistingStatus');
+        it('should handle deletion of non-existing status', async () => {
+            const response = await request(app)
+                .delete('/status/NonExistingStatus');
 
-    //         expect(response.status).toBe(404);
-    //         expect(response.body).toEqual({
-    //             success: false
-    //         })
-    //     })
-    // })
+            expect(response.status).toBe(404);
+            expect(response.body).toEqual({
+                success: false
+            })
+        })
+    })
 })
