@@ -7,19 +7,21 @@ module.exports = {
     //metodo para retonar todos os status cadastrados na tabela
     async index(req, res) {
         try {
+            
             const [results] = await Status.sequelize.query(`SELECT tipo FROM status ORDER BY tipo `)
-
-            if (results > 0) {
-                return res.json(results);
+            
+            if (results.length > 0) {
+                return res.status(200).json(results);
+                
 
             } else {
-                res.status(404).json({
+               return res.status(404).json({
                     success: false,
                     message: "Não há cadastros",
                 });
             }
         } catch (error) {
-           return res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: error.message,
             });
@@ -75,7 +77,7 @@ module.exports = {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // método para deletar o status referente ao tipo informado
-       async delete(req, res) {
+    async delete(req, res) {
         try {
             await Status.sequelize.query(`DELETE FROM status WHERE tipo = ?`,
                 { replacements: [req.params.tipo] });

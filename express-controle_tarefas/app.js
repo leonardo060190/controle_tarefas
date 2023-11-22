@@ -22,8 +22,7 @@ const tarefaRouter = require('./routes/Tarefas');
 // Este módulo é responsável por importar as rotas relacionadas a Usuario_tarefas
 const Usuario_tarefasRouter = require('./routes/Usuario_tarefas');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+
 
 const app = express();
 
@@ -57,8 +56,7 @@ app.use(tarefaRouter);
 //trata as rotas relacionadas às Usuario_tarefas.
 app.use(Usuario_tarefasRouter);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 
 //Tratamento de erros 404:
 // catch 404 and forward to error handler
