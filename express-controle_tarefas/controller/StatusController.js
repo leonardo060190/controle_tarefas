@@ -7,10 +7,11 @@ module.exports = {
     //metodo para retonar todos os status cadastrados na tabela
     async index(req, res) {
         try {
-            const [results, metadata] = await Status.sequelize.query(`SELECT * FROM status ORDER BY tipo `)
+            const [results] = await Status.sequelize.query(`SELECT tipo FROM status ORDER BY tipo `)
 
-            if (results.length > 0) {
-                res.json(results);
+            if (results > 0) {
+                return res.json(results);
+
             } else {
                 res.status(404).json({
                     success: false,
@@ -18,7 +19,7 @@ module.exports = {
                 });
             }
         } catch (error) {
-            res.status(500).json({
+           return res.status(500).json({
                 success: false,
                 message: error.message,
             });
@@ -74,28 +75,32 @@ module.exports = {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // método para deletar o status referente ao tipo informado
-    async delete(req, res) {
-        await Status.sequelize.query(`DELETE FROM status WHERE tipo = ?`,
-            { replacements: [req.params.tipo] })
-            .then(([results, metadata]) => {
+       async delete(req, res) {
+        try {
+            await Status.sequelize.query(`DELETE FROM status WHERE tipo = ?`,
+                { replacements: [req.params.tipo] });
+
+            if (results, metadata) {
                 if (metadata.affectedRows === 0) {
-                    res.status(404).json({
+                    return res.status(404).json({
                         success: false,
                         message: "Status não encontrado",
                     });
                 } else {
-                    res.json({
+                    return res.json({
                         success: true,
                         message: "Status deletado com sucesso",
                     });
                 }
-            }).catch((error) => {
-                res.status(500).json({
-                    success: false,
-                    message: error.message,
-                });
-            })
+            }
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: "Erro ao deletar status",
+            });
+        }
     }
+
 
 
 
