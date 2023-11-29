@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './Container.module.css'
 
 function Container(props) {
@@ -10,5 +11,10 @@ function Container(props) {
     )
 
 }
+
+Container.propTypes = {
+    pageClass: PropTypes.string, // Assuming pageClass is optional
+    children: PropTypes.node.isRequired,
+};
 
 export default Container

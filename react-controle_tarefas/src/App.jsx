@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Home from './components/pages/home/Home'
-import Tarefas from './components/pages/tarefas/Tarefas'
+import Tasks from './components/pages/task/Tasks'
+import NewTasks from './components/pages/newtasks/NewTask'
 
 import Navbar from './components/layout/navbar/Navibar'
 import Container from './components/layout/container/Container'
 import Footer from './components/layout/footer/Footer'
+
+
+
 function App() {
 
 
@@ -20,8 +24,12 @@ function App() {
           <Home />
         </Container>}/>
 
-        <Route exact path='/tarefas' element={<Container pageClass='min-height'>
-          <Tarefas />
+        <Route exact path='/tasks' element={<Container pageClass='min-height'>
+          <Tasks />
+        </Container>}/>
+
+        <Route exact path='/newtask' element={<Container pageClass='min-height'>
+          <NewTasks />
         </Container>}/>
 
 
