@@ -2,3 +2,13 @@
     width: 100%;
     margin: 2em 0;
 }
+
+.inputdate {
+    display: flex; /* Add flex display */
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.inputdate input {
+    width: 170px; /* Adjust the width as needed */
+    margin-right: 0 auto; /* Add some spacing between the date inputs */
+}

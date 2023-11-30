@@ -98,6 +98,9 @@ module.exports = {
 
     //método para que insere uma nova tarefa na tabela
     async store(req, res) {
+        console.log("teste");
+        const teste = req.body.titulo;
+        console.log(teste);
         // Verifique se o titulo já está cadastrado
         const tarefasExistente = await Tarefas.findOne({
             where: { titulo: req.body.titulo }
