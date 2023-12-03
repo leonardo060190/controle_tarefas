@@ -12,7 +12,8 @@ module.exports = {
       },
       tipo: {
         type: Sequelize.STRING(30),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       created_at: {
         type: Sequelize.DATE,
@@ -23,9 +24,16 @@ module.exports = {
         allowNull: false
       }
     })
+     // Adicionando uma restrição UNIQUE para a coluna `user`
+     await queryInterface.addConstraint('status', {
+      type: 'unique',
+      fields: ['tipo'],
+      name: 'unique_tipo'
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeConstraint('statur', 'unique_tipo');
     await queryInterface.dropTable('status');
   }
 };

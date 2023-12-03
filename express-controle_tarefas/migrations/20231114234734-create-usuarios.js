@@ -18,13 +18,20 @@ module.exports = {
         type: Sequelize.STRING(40),
         allowNull: false
       },
+      user: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       senha: {
         type: Sequelize.STRING(8),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       created_at: {
         type: Sequelize.DATE,
@@ -34,10 +41,35 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       }
-    })
+    });
+    // Adicionando uma restrição UNIQUE para a coluna `user`
+    await queryInterface.addConstraint('usuarios', {
+      type: 'unique',
+      fields: ['user'],
+      name: 'unique_user'
+    });
+
+    // Adicionando uma restrição UNIQUE para a coluna `email`
+    await queryInterface.addConstraint('usuarios', {
+      type: 'unique',
+      fields: ['email'],
+      name: 'unique_email'
+    });
+     // Adicionando uma restrição UNIQUE para a coluna `senha`
+     await queryInterface.addConstraint('usuarios', {
+      type: 'unique',
+      fields: ['senha'],
+      name: 'unique_senha'
+    });
   },
 
+
   down: async (queryInterface, Sequelize) => {
+
+    await queryInterface.removeConstraint('usuarios', 'unique_user');
+    await queryInterface.removeConstraint('usuarios', 'unique_email');
+    await queryInterface.removeConstraint('usuarios', 'unique_senha');
+
     await queryInterface.dropTable('usuarios');
   }
 };
