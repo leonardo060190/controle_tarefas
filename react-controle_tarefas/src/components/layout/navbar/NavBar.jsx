@@ -12,7 +12,7 @@ function Navbar() {
                 <Link to='/'><img src={logo} alt='Tasks' /></Link>
                 <ul className={styles.list}>
                     <li className={styles.item}><Link to='/'>Home</Link></li>
-                    <li className={styles.item}><Link to='/tasks'>Tarefas</Link></li>
+                    <li className={styles.item}><Link to='/tarefas'>Tarefas</Link></li>
                 </ul>
             </Container>
 

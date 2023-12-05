@@ -8,7 +8,7 @@ module.exports = {
     async index(req, res) {
         try {
             
-            const [results] = await Status.sequelize.query(`SELECT tipo FROM status ORDER BY tipo `)
+            const [results] = await Status.sequelize.query(`SELECT id, tipo FROM status ORDER BY tipo `)
             
             if (results.length > 0) {
                 return res.status(200).json(results);

@@ -12,3 +12,17 @@
     width: 170px; /* Adjust the width as needed */
     margin-right: 0 auto; /* Add some spacing between the date inputs */
 }
+
+.btn_limpa {
+    background-color: #222;
+    color: #fff;
+    padding: 0.7em 1.2em;
+    text-decoration: none;
+    transition: .5s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn_limpa:hover {
+    color: #ffbb33;
+}

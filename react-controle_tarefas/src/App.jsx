@@ -31,6 +31,9 @@ function App() {
         <Route exact path='/newtask' element={<Container pageClass='min-height'>
           <NewTasks />
         </Container>}/>
+        {/* <Route path="/task/:id" element={<Container pageClass="min-height">
+          <Task />
+        </Container>} /> */}
 
 
       </Routes>

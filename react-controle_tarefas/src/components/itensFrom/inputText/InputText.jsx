@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styles from './Input.module.css';
+import styles from './InputText.module.css';
 
 function Input({ type, text, name, placeholder, handleOnChange, value }) {
     return (
@@ -23,7 +23,7 @@ Input.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     handleOnChange: PropTypes.func, // Assuming this is a function to handle onChange
-    value: PropTypes.string, // Assuming the selected value is a string
+    value:PropTypes.string,
 };
 
 export default Input

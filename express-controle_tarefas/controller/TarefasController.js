@@ -98,6 +98,7 @@ module.exports = {
 
     //método para que insere uma nova tarefa na tabela
     async store(req, res) {
+
         await Tarefas.sequelize.query(
             `INSERT INTO tarefas (
                 titulo,
