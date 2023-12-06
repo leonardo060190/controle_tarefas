@@ -55,6 +55,9 @@ const TarefasForm = ({ btnText }) => {
     const limparFormulario = () => {
         reset({
             nome: "",
+            sobrenome: "",
+            email: "",
+            senha: ""
         });
     };
 
@@ -66,22 +69,22 @@ const TarefasForm = ({ btnText }) => {
             <form className={styles.form} onSubmit={handleSubmit(salvar)}>
                 <div className={styles.form_control}>
                     <label htmlFor="nome">Nome</label>
-                    <input type="text" className="form-control" id="titulo"
+                    <input type="text" className="form-control" id="nome" placeholder="Digite o nome"
                         required autoFocus {...register("nome")} />
                 </div>
                 <div className={styles.form_control}>
                     <label htmlFor="sobrenome">Sobrenome</label>
-                    <input type="text" className="form-control" id="sobrenome"
+                    <input type="text" className="form-control" id="sobrenome" placeholder="Digite o sobrenome"
                         required {...register("sobrenome")} />
                 </div>
                 <div className={styles.form_control}>
                     <label htmlFor="email">E-mail</label>
-                    <input type="email" className="form-control" id="email"
+                    <input type="email" className="form-control" id="email" placeholder="Informe o e-mail"
                         required {...register("email")} />
                 </div>
                 <div className={styles.form_control}>
                     <label htmlFor="senha">Senha</label>
-                    <input type="password" className="form-control" id="senha"
+                    <input type="password" className="form-control" id="senha" placeholder="Digite uma senha"
                         required {...register("senha")} />
                 </div>
 

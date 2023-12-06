@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 
 
 const TarefasForm = ({ btnText }) => {
-  const { register, handleSubmit } = useForm();
-  const [setAviso] = useState("");
+  const { register, handleSubmit, reset } = useForm();
+  const [aviso, setAviso] = useState("");
   const [status, setStatus] = useState([]);
 
 
@@ -22,7 +22,7 @@ const TarefasForm = ({ btnText }) => {
 
         ]);
         setStatus(status.data);
-        console.log(status.data)
+        //console.log(status.data)
       } catch (error) {
         console.error("Erro status:", error);
       }
@@ -36,15 +36,36 @@ const TarefasForm = ({ btnText }) => {
       const response = await api.post("tarefas", {
         ...campos,
         status_id: campos.id_status, // Use the registered ID
+
       });
       setAviso(`Tarefa cadastrada com sucesso!"
               ${response.data.id}`);
+      limparFormulario();
     } catch (error) {
       setAviso("Erro ao cadastrar tarefa!");
     }
   };
 
-  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAviso("");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [aviso]);
+
+
+  const limparFormulario = () => {
+    reset({
+      titulo: "",
+      descricao: "",
+      status: "",
+      data_criacao: "",
+      data_limite: ""
+    });
+  };
+
+
 
   //aqui é o que vai ser exibido em tela
   return (
@@ -52,16 +73,16 @@ const TarefasForm = ({ btnText }) => {
       <form className={styles.form} onSubmit={handleSubmit(salvar)}>
         <div className={styles.form_control}>
           <label htmlFor="titulo">Titulo</label>
-          <input type="text" className="form-control" id="titulo"
+          <input type="text" className="form-control" id="titulo" placeholder="Adicione um titulo"
             required autoFocus {...register("titulo")} />
         </div>
         <div className={styles.form_control}>
           <label htmlFor="descricao">Descrição</label>
-          <input type="textarea" className="form-control" id="descricao"
+          <input type="textarea" className="form-control" id="descricao" placeholder="Descreva a tarefa" 
             required {...register("descricao")} />
         </div>
         <div className={styles.form_control}>
-          <label htmlFor="status">Status</label>
+          <label htmlFor="status_id">Status</label>
           <select className="form-control" id="status_id" required {...register("id_status")}>
             <option value="">Selecione um Status</option>
             {status.map((status => (
@@ -73,17 +94,19 @@ const TarefasForm = ({ btnText }) => {
         <div className={styles.inputdate}>
           <div className={styles.form_control}>
             <label htmlFor="data_criacao">Data de Criação</label>
-            <input type="datetime-local" className="validity"
+            <input type="date" className="form-control"
               id="data_criacao" required {...register("data_criacao")}></input><span className="validity"></span>
           </div>
           <div className={styles.form_control}>
             <label htmlFor="data_limite">Data Limite</label>
-            <input type="datetime-local" className="form-control"
+            <input type="date" className="form-control"
               id="data_limite" required {...register("data_limite")}></input><span className="validity"></span>
           </div>
         </div>
         <div className={styles.aling_button}>
+
           <SubmitButton text={btnText} />
+
           <input type="reset" className={styles.btn_limpa}
             value="Limpar" />
         </div>

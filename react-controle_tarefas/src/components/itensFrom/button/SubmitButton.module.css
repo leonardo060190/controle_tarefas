@@ -9,5 +9,6 @@
 }
 
 .btn:hover {
-    color: #ffbb33;
+    color: #222;
+    background-color: green;
 }

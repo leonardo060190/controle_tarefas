@@ -18,11 +18,6 @@ module.exports = {
         type: Sequelize.STRING(40),
         allowNull: false
       },
-      user: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -42,13 +37,6 @@ module.exports = {
         allowNull: false
       }
     });
-    // Adicionando uma restrição UNIQUE para a coluna `user`
-    await queryInterface.addConstraint('usuarios', {
-      type: 'unique',
-      fields: ['user'],
-      name: 'unique_user'
-    });
-
     // Adicionando uma restrição UNIQUE para a coluna `email`
     await queryInterface.addConstraint('usuarios', {
       type: 'unique',
@@ -66,7 +54,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
 
-    await queryInterface.removeConstraint('usuarios', 'unique_user');
     await queryInterface.removeConstraint('usuarios', 'unique_email');
     await queryInterface.removeConstraint('usuarios', 'unique_senha');
 

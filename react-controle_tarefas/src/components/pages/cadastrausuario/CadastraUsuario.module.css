@@ -1,3 +1,14 @@
-.Cdt_User{
-    color: rgb(255, 0, 0);
+.cadastroUser_container {
+    width: 450px;
+    margin: 0 auto;
+    padding: 3em;
+}
+
+.cadastroUser h1 {
+    margin-bottom: 0.5em;
+}
+
+.cadastroUser p {
+    color: #7b7b7b;
+    
 }

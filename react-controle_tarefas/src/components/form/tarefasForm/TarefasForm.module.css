@@ -24,7 +24,8 @@
 }
 
 .btn_limpa:hover {
-    color: #ff3333;
+    color: #222;
+    background-color: #ff3333;
 }
 
 .form_control {

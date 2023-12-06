@@ -1,0 +1,53 @@
+.form {
+    width: 125%;
+    margin: 2em 0;
+    
+}
+
+.form_control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.form_control label {
+    margin-bottom: .6em;
+    font-weight: bold;
+}
+
+.form_control input {
+    padding: .7em;
+    border-radius: 0;
+    border: none;
+}
+
+.form_control select {
+    padding: .7em;
+    border-radius: 0;
+    border: none;
+}
+
+
+.form_control input::placeholder {
+    color: #7b7b7b;
+}
+
+.aling_button {
+    justify-content: space-between; 
+    display: flex; 
+}
+
+.btn_limpa {
+    background-color: #222;
+    color: #fff;
+    padding: 0.7em 1.2em;
+    text-decoration: none;
+    transition: .5s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn_limpa:hover {
+    color: #222;
+    background-color: #ff3333;
+}
