@@ -64,9 +64,9 @@ function LoginForm() {
                             />
                         </div>
                         
-                        <button className={styles.btn_login}>Cadastrar</button>
+                        <button className={styles.btn_login}>Login</button>
                         
-                        <LinkButton to="/cadastroUser" text="Cadatre-se"/>
+                        <LinkButton to="/cadastroUser" text="Cadastre-se"/>
 
                     </div>
                 </div>
