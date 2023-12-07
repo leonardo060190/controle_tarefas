@@ -6,7 +6,21 @@ module.exports = {
 
     //método para retonar todas as tarefas
     async index(req, res) {
-        await Tarefas.sequelize.query(`SELECT * FROM tarefas ORDER BY titulo `)
+        await Tarefas.sequelize.query(`SELECT 
+        tarefas.id,
+        titulo,
+        descricao,
+        tipo,
+        data_criacao,
+        data_limite
+        FROM 
+        tarefas 
+        left join 
+        status 
+        on 
+        status.id = 
+        tarefas.id_status`
+        )
             .then(([results, metadata]) => {
                 if (results.length > 0) {
                     res.json(results);
@@ -28,7 +42,7 @@ module.exports = {
     // método que busca as tarefas referente ao titulo informado
     async buscaTitulo(req, res) {
         await Tarefas.sequelize.query(`SELECT * FROM tarefas WHERE titulo LIKE ?`,
-            { replacements: `%${req.params.titulo}%`})
+            { replacements: `%${req.params.titulo}%` })
             .then(([results, metadata]) => {
                 if (results.length === 0) {
                     res.status(404).json({
@@ -118,7 +132,7 @@ module.exports = {
                         req.body.data_criacao,
                         req.body.data_limite,
                         new Date()
-                       
+
                     ]
 
             }

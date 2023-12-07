@@ -5,12 +5,14 @@ import { useState, useEffect } from "react";
 import SubmitButton from '../../itensFrom/button/SubmitButton';
 import styles from "./TarefasForm.module.css"
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 
 const TarefasForm = ({ btnText }) => {
   const { register, handleSubmit, reset } = useForm();
   const [aviso, setAviso] = useState("");
   const [status, setStatus] = useState([]);
+  const navigate = useNavigate(); 
 
 
 
@@ -41,6 +43,7 @@ const TarefasForm = ({ btnText }) => {
       setAviso(`Tarefa cadastrada com sucesso!"
               ${response.data.id}`);
       limparFormulario();
+      navigate('/tarefas')
     } catch (error) {
       setAviso("Erro ao cadastrar tarefa!");
     }

@@ -3,9 +3,10 @@ import styles from './TarefasCard.module.css';
 import { BsPencil, BsFillTrashFill } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 
-function TarefasCard({ tarefas, handleRemove }) {
-  if (!tarefas.length) return <p>Carregando...</p>;
+function TarefasCard({ tarefas = {} , handleRemove }) {
+  if (!tarefas) return <p>Carregando...</p>;
   const { id, titulo, descricao, status } = tarefas;
+  console.log(tarefas)
 
   const remove = (e) => {
     e.preventDefault();
@@ -20,9 +21,7 @@ function TarefasCard({ tarefas, handleRemove }) {
         <span>Descrição:</span> {descricao}
       </p>
       <p className={styles.category_text}>
-        <span >
-          {status}
-        </span>
+        <span >{status}</span>
       </p>
       <div className={styles.project_card_actions}>
         <Link to={`/editarTarefas/${id}`}>

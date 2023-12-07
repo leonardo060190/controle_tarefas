@@ -21,9 +21,9 @@ function App() {
 
       <Routes>
 
-        <Route  path='/login' element={<Container pageClass='min-height'>
+        <Route exact path='/login' element={
           <Login />
-        </Container>} />
+        }/>
 
         <Route path='/' element={<Container pageClass='min-height'>
           <Home />

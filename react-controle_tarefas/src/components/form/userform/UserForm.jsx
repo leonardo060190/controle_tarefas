@@ -5,30 +5,16 @@ import { useState, useEffect } from "react";
 import SubmitButton from '../../itensFrom/button/SubmitButton';
 import styles from "./UserForm.module.css"
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 
 const TarefasForm = ({ btnText }) => {
     const { register, handleSubmit, reset } = useForm();
     const [aviso, setAviso] = useState("");
-    //const [usuario, setUsuario] = useState([]);
+    const navigate = useNavigate(); 
+   
 
 
-
-    // useEffect(() => {
-    //     const fetchUsuario = async () => {
-    //         try {
-    //             const [usuario] = await Promise.all([
-    //                 api.get("/usuarios"),
-
-    //             ]);
-    //             setUsuario(usuario.data);
-    //             console.log(usuario.data)
-    //         } catch (error) {
-    //             console.error("Erro usuario:", error);
-    //         }
-    //     };
-    //     fetchUsuario();
-    // }, []);
 
     //método chamado ao enviar form onSubmit
     const salvar = async (campos) => {
@@ -37,11 +23,13 @@ const TarefasForm = ({ btnText }) => {
             setAviso(`Usuario cadastrado com sucesso!)
               ${response.data.id}`);
             limparFormulario();
+            navigate('/login')
 
         } catch (error) {
             setAviso("Erro ao cadastrar usuario!");
         }
     };
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -84,12 +72,14 @@ const TarefasForm = ({ btnText }) => {
                 </div>
                 <div className={styles.form_control}>
                     <label htmlFor="senha">Senha</label>
-                    <input type="password" className="form-control" id="senha" placeholder="Digite uma senha"
+                    <input type="password" className="form-control" maxLength={8} id="senha" placeholder="Digite uma senha"
                         required {...register("senha")} />
                 </div>
 
                 <div className={styles.aling_button}>
+                    
                     <SubmitButton text={btnText} />
+
                     <input type="reset" className={styles.btn_limpa}
                         value="Limpar Form" />
                 </div>
