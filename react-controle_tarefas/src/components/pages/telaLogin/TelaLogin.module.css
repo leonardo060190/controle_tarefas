@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+
+
+.login_container{
+    width: 100vw;
+    height: 100vh;
+    background: SlateGray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left_login{
+    width: 50vw;
+    height: 100vh;
+    background: SlateGray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.left_login > h1 {
+    color: #ffbb33;
+    
+}
+
+
+img{
+    width: 500px;
+    height: 500px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

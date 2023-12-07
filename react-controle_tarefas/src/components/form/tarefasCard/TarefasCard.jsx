@@ -12,8 +12,6 @@ function TarefasCard({ tarefas, handleRemove }) {
     handleRemove(id);
   };
 
-  const statusClassName = status ? styles[status.toLowerCase()] : '';
-  const screenReaderText = status ? `(${status})` : '';
 
   return (
     <div className={styles.project_card}>
@@ -22,7 +20,7 @@ function TarefasCard({ tarefas, handleRemove }) {
         <span>Descrição:</span> {descricao}
       </p>
       <p className={styles.category_text}>
-        <span className={statusClassName} aria-label={screenReaderText}>
+        <span >
           {status}
         </span>
       </p>

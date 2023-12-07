@@ -45,7 +45,7 @@ const TarefasForm = ({ btnText }) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setAviso("");
+            
         }, 5000);
 
         return () => clearTimeout(timer);
@@ -91,7 +91,7 @@ const TarefasForm = ({ btnText }) => {
                 <div className={styles.aling_button}>
                     <SubmitButton text={btnText} />
                     <input type="reset" className={styles.btn_limpa}
-                        value="Limpar" />
+                        value="Limpar Form" />
                 </div>
             </form>
             <div className="alert"></div>
