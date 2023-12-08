@@ -5,12 +5,15 @@ import Container from '../../layout/container/Container'
 import TarefasCard from '../../form/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
+import { useForm } from 'react-hook-form'
+
 
 
 function Tarefas() {
 
   const [tarefas, setTarefas] = useState([]);
   const [removeLoading, setRemoveLoading] = useState(false);
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,21 +25,34 @@ function Tarefas() {
     try {
       const lista = await api.get("/tarefas");
       setTarefas(lista.data);
-      console.log(lista)
+      //console.log(lista)
       setRemoveLoading(true)
     } catch (error) {
       alert(`Erro: ..Não foi possível obter os dados: ${error}`);
     }
   };
 
+
+  const filtrarLista = async (campos) => {
+    try {
+      const lista = await api.get(`/tarefas/${campos.titulo}`);
+      lista.data.length
+      console.log(lista)
+        ? setTarefas(lista.data)
+        : alert("Não há tarefas cadastradas com a palavra chave pesquisada");
+    } catch (error) {
+      alert(`Erro: ..Não foi possível obter os dados: ${error}`);
+    }
+  }
+
   const removeTarefa = async (id, titulo) => {
     if (!window.confirm(`Confirma a exclusão do Tarefa ${titulo}?`)) {
       return;
     }
     try {
-      await api.delete(`tarefas/${id}`);
+      await api.delete(`/tarefas/${id}`);
       //formar uma nova lista de tarefas sem a tarefa que foi excluida
-      setTarefas(tarefas.filter(tarefas => tarefas.id !== id));
+      setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
 
     } catch (error) {
       alert(`Erro: ..Não foi possível excluir a tarefa ${titulo}: ${error}`);
@@ -46,44 +62,45 @@ function Tarefas() {
 
 
   return (
-    <div className={styles.project_container}>
-      <div className={styles.title_container}>
-      {/* <div className="col-sm-5">
-                {/* <form >
-                    <div className="input-group mt-3">
-                        <input type="text" className="form-control" placeholder="Titulo" required />
-                        <input type="submit" className="btn btn-primary" value="Pesquisar" />
-                        <input type="button" className="btn btn-danger" value="Todos" onClick={()=>{reset({palavra:""});obterLista();}}/>
-                    </div>
-                </form>
-            </div> */}
-        <h1>Tarefas</h1>
-        <LinkButton to="/novaTarefa" text="Criar Tarefa" />
+
+    <div className="col-sm-5">
+      <form onSubmit={handleSubmit(filtrarLista)}>
+        <input type="text" className="form-control" placeholder="Titulo" required {...register("titulo")} />
+        <input type="submit" className="btn btn-primary" value="Pesquisar" />
+      </form>
+
+      <div className={styles.project_container}>
+        <div className={styles.title_container}>
+          <h1>Tarefas</h1>
+          <LinkButton to="/novaTarefa" text="Criar Tarefa" />
+        </div>
+        <Container pageClass="start">
+          {tarefas.length > 0 && tarefas.map((tarefa) => (
+            <TarefasCard
+              key={tarefa.id}
+              id={tarefa.id}
+              titulo={tarefa.titulo}
+              descricao={tarefa.descricao}
+              tipo={tarefa.tipo}
+              data_criacao={tarefa.data_criacao}
+              data_limite={tarefa.data_limite}
+              handleRemove={removeTarefa}
+              handleSubmit={filtrarLista}
+
+            />
+          ))}
+          {!removeLoading && <Loading />}
+          {removeLoading && tarefas.length === 0 && (
+            <p>Não há projetos cadastrados!</p>
+          )}
+
+
+
+        </Container>
       </div>
-      <Container pageClass="start">
-        {tarefas.length > 0 && tarefas.map((tarefa) => (
-          <TarefasCard
-            key={tarefa.id ? tarefa.id : tarefas.indexOf(tarefa)}
-            id={tarefa.id}
-            titulo={tarefa.titulo}
-            descricao={tarefa.descricao}
-            status={tarefa.status}
-            data_criacao={tarefa.data_criacao}
-            data_limite={tarefa.data_limite}
-            handleRemove={removeTarefa}
+      </div>
 
-          />
-        ))}
-        {!removeLoading && <Loading />}
-        {removeLoading && tarefas.length === 0 && (
-          <p>Não há projetos cadastrados!</p>
-        )}
-
-
-
-      </Container>
-    </div>
   )
 }
 
-export default Tarefas
+      export default Tarefas
