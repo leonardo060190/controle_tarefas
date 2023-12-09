@@ -17,7 +17,7 @@ function App() {
   return (
     <Router>
 
-      {!window.location.pathname.includes("/login") && <Navbar />}
+      {!window.location.pathname.includes("/login" ) && <Navbar />}
 
       <Routes>
 
@@ -37,7 +37,7 @@ function App() {
           <NovaTarefa />
         </Container>} />
 
-        <Route path="/cadastroUser" element={<Container pageClass="min-height">
+        <Route exact path="/cadastroUser" element={<Container pageClass="min-height">
           <CadastroUser />
         </Container>} />
 
