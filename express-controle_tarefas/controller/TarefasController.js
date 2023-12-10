@@ -40,41 +40,44 @@ module.exports = {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // método que busca as tarefas referente ao titulo informado
-    async buscaTitulo(req, res) {
-        await Tarefas.sequelize.query(`
-        SELECT 
-        tarefas.id,
-        titulo,
-        descricao,
-        tipo,
-        data_criacao,
-        data_limite
-        FROM 
-        tarefas 
-        left join 
-        status 
-        on 
-        status.id = 
-        tarefas.id_status`,
-            { replacements: {titulo: req.params.titulo} })
-            .then(([results, metadata]) => {
-                if (results.length === 0) {
-                    res.status(404).json({
-                        success: false,
-                        message: "Tarefas não encontrado",
-                    });
-                } else {
-                    res.json({
-                        success: true,
-                        Tarefas: results,
-                    });
-                }
-            }).catch((error) => {
-                res.status(500).json({
+    async buscaId(req, res) {
+        try {
+            const [results, metadata] = await Tarefas.sequelize.query(
+                `
+                SELECT 
+                    tarefas.id,
+                    titulo,
+                    descricao,
+                    tipo,
+                    data_criacao,
+                    data_limite
+                FROM 
+                    tarefas 
+                    LEFT JOIN status ON status.id = tarefas.id_status
+                WHERE
+                    tarefas.id = ?
+                `,
+                { replacements: [req.params.id ] }
+            );
+    
+            if (results.length === 0) {
+                res.status(404).json({
                     success: false,
-                    message: error.message,
+                    message: "Tarefas não encontrado",
                 });
+            } else {
+                res.json({
+                    success: true,
+                    Tarefas: results,
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching tasks by ID:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message,
             });
+        }
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

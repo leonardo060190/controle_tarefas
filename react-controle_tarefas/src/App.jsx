@@ -38,7 +38,7 @@ function App() {
           <NovaTarefa />
         </Container>} />
 
-        <Route path='/editartarefa/:titulo' element={<Container pageClass='min-height'>
+        <Route path='/editartarefa/:id' element={<Container pageClass='min-height'>
           <EditarTarefa />
         </Container>} />
 

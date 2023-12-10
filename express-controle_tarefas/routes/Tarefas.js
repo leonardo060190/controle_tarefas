@@ -9,7 +9,7 @@ const router = express.Router();//importa biblioteca router do express router
 
 router.get('/tarefas', Tarefas.index)// rota para buscar todos os tarefas
 
-router.get('/tarefas/:titulo', Tarefas.buscaTitulo)// rota que busca pelo titulo a tarefa relacionada
+router.get('/tarefas/:id', Tarefas.buscaId)// rota que busca pelo titulo a tarefa relacionada
 
 router.post('/tarefas', Tarefas.store)// rota que cria uma nova tarefa
 

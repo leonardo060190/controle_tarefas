@@ -12,8 +12,8 @@ import {api} from '../../../../config/ConfigAxios'
 
 function EditarTarefas() {
 
-    const { titulo } = useParams([])
-    console.log(titulo)
+    const { id } = useParams()
+    //console.log(id)
 
     const [tarefas, setTarefas] = useState([])
     console.log('teste',tarefas)
@@ -24,11 +24,11 @@ function EditarTarefas() {
             
         }, 500)
 
-    },[])
+    },[id])
 
     const obterTarefa = async () => {
         try {
-          const lista = await api.get(`/tarefas/${titulo}`);
+          const lista = await api.get(`/tarefas/${id}`);
           console.log(lista)
           setTarefas(lista.data);
           

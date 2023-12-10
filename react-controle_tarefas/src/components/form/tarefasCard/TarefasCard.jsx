@@ -38,7 +38,7 @@ function TarefasCard({
         <span></span>{tipo}
       </p>
       <div className={styles.project_card_actions}>
-        <Link to={`/editartarefa/${titulo}`}>
+        <Link to={`/editartarefa/${id}`}>
           <BsPencil /> Editar
         </Link>
         <button onClick={remove}>
