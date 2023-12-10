@@ -98,12 +98,12 @@ const TarefasForm = ({ btnText }) => {
           <div className={styles.form_control}>
             <label htmlFor="data_criacao">Data de Criação</label>
             <input type="date" className="form-control"
-              id="data_criacao" required {...register("data_criacao")}></input><span className="validity"></span>
+              id="data_criacao" required {...register("data_criacao")}></input>
           </div>
           <div className={styles.form_control}>
             <label htmlFor="data_limite">Data Limite</label>
             <input type="date" className="form-control"
-              id="data_limite" required {...register("data_limite")}></input><span className="validity"></span>
+              id="data_limite" required {...register("data_limite")}></input>
           </div>
         </div>
         <div className={styles.aling_button}>

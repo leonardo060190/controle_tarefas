@@ -6,7 +6,7 @@ function NovaTarefa() {
         <section className={styles.novatarefas_container}>
             <h1>Criar nova tarefa</h1>
             <p>Estabeleça suas tarefas de forma a manter um controle eficiente.</p>
-            <TarefasForm  btnText="Criar Projeto"/>
+            <TarefasForm  btnText="Criar Tarefa"/>
         </section>
     )
 }

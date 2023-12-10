@@ -57,9 +57,9 @@ module.exports = {
                 WHERE
                     tarefas.id = ?
                 `,
-                { replacements: [req.params.id ] }
+                { replacements: [req.params.id] }
             );
-    
+
             if (results.length === 0) {
                 res.status(404).json({
                     success: false,

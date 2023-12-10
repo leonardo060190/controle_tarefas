@@ -6,9 +6,11 @@
     transition: .5s;
     cursor: pointer;
     border: none;
+    border-radius: 5px;
 }
 
 .btn:hover {
-    color: #222;
-    background-color: green;
+    color: green;
+   
+    
 }

@@ -45,9 +45,10 @@
     transition: .5s;
     cursor: pointer;
     border: none;
+    border-radius: 5px;
 }
 
 .btn_limpa:hover {
-    color: #222;
-    background-color: #ff3333;
+    color: #ffbb33;
+  
 }
