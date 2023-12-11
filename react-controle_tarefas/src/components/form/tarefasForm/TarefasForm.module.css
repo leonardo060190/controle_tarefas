@@ -1,16 +1,16 @@
 .form {
-    width: 125%;
+    width: 100%;
     margin: 2em 0;
 }
 
 .inputdate {
-    display: flex; /* Add flex display */
+    display:inline-flex; /* Add flex display */
     justify-content: space-between; /* Adjust as needed */
 }
 
 .inputdate input {
     width: 190px; /* Adjust the width as needed */
-    margin-right: 0 auto; /* Add some spacing between the date inputs */
+    margin-right: 5em; /* Add some spacing between the date inputs */
 }
 
 .btn_limpa {
@@ -62,15 +62,3 @@
     display: flex; 
 }
 
-input:invalid + span::after {
-    content: "✖";
-    padding-left: 5px;
-    color: #fa0404;
-    
-  }
-  
-  input:valid + span::after {
-    content: "✓";
-    padding-left: 5px;
-    color: green;
-  }

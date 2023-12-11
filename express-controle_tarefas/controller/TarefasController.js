@@ -42,7 +42,7 @@ module.exports = {
     // método que busca as tarefas referente ao titulo informado
     async buscaId(req, res) {
         try {
-            const [results, metadata] = await Tarefas.sequelize.query(
+            const [results] = await Tarefas.sequelize.query(
                 `
                 SELECT 
                     tarefas.id,
@@ -59,18 +59,15 @@ module.exports = {
                 `,
                 { replacements: [req.params.id] }
             );
-
-            if (results.length === 0) {
+            if (!results[0]) {
                 res.status(404).json({
                     success: false,
                     message: "Tarefas não encontrado",
                 });
-            } else {
-                res.json({
-                    success: true,
-                    Tarefas: results,
-                });
+                return;
             }
+
+            res.json(results[0]);
         } catch (error) {
             console.error('Error fetching tasks by ID:', error);
             res.status(500).json({

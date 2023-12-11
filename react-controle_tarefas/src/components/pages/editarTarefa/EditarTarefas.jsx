@@ -8,37 +8,59 @@ import { api } from '../../../../config/ConfigAxios';
 
 function EditarTarefas() {
     const { id } = useParams();
+
     const [tarefas, setTarefas] = useState([]);
-    const [showProjectForm, setShowProjectForm] = useState(false);
+    const [showTarefaForm, setShowTarefaForm] = useState(false);
+    const [dadosForm, setDadosForm] = useState(tarefas);
     console.log("teste", tarefas);
+    console.log("testeF", tarefas);
+
+
     useEffect(() => {
         async function obterTarefa() {
             try {
                 const response = await api.get(`/tarefas/${id}`);
                 console.log("teste3", response.data);
                 setTarefas(response.data);
+                setDadosForm(response.data);
             } catch (error) {
                 alert(`Erro: Não foi possível obter os dados: ${error}`);
             }
         }
 
-        // Call the function to fetch data
         obterTarefa();
     }, [id]);
 
-    async function editPost(updatedData) {
+
+
+    async function editPost(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const titulo = formData.get("titulo");
+        const descricao = formData.get("descricao");
+        const tipo = formData.get("tipo");
+        const data_criacao = formData.get("data_criacao");
+        const data_limite = formData.get("data_limite");
+
         try {
-            const response = await api.patch(`/tarefas/${id}`, updatedData);
+            const response = await api.patch(`/tarefas/${id}`, {
+                titulo,
+                descricao,
+                tipo,
+                data_criacao,
+                data_limite,
+            });
             console.log("teste3", response.data);
-            setTarefas(response.data);
-            setShowProjectForm(!showProjectForm);
+            setTarefas(response.data); // Atualize o estado com os dados atualizados
+            setShowTarefaForm(!showTarefaForm);
         } catch (error) {
             alert(`Erro: Não foi possível obter os dados: ${error}`);
         }
     }
 
-    function toggleProjectForm() {
-        setShowProjectForm(!showProjectForm);
+    function toggleTarefaForm() {
+        setShowTarefaForm(!showTarefaForm);
     }
 
     return (
@@ -47,23 +69,41 @@ function EditarTarefas() {
                 <div className={styles.project_details}>
                     <Container pageClass="column">
                         <div className={styles.details_container}>
-                            <h1>Projeto: {tarefas.titulo}</h1>
-                            <button className={styles.btn} onClick={toggleProjectForm}>
-                                {!showProjectForm ? 'Editar projeto' : 'Fechar'}
+                            <h1>Tarefa: {tarefas.titulo}</h1>
+                            <button className={styles.btn} onClick={toggleTarefaForm}>
+                                {!showTarefaForm ? 'Editar Tarefa' : 'Fechar'}
                             </button>
-                            {!showProjectForm ? (
+                            {!showTarefaForm ? (
                                 <div className={styles.project_info}>
                                     <p>
-                                        <span>descricao:</span> {tarefas.descricao}
+                                        <span>descricao: </span> {tarefas.descricao}
                                     </p>
-                                    {/* Add other project information */}
+
+                                    <p>
+                                        <span>Data de Criação: </span> {tarefas.data_criacao}
+                                    </p>
+
+                                    <p>
+                                        <span>Data Limite: </span> {tarefas.data_limite}
+                                    </p>
+
+                                    <p>
+                                        <span>Status: </span> {tarefas.tipo}
+                                    </p>
+
+
                                 </div>
                             ) : (
                                 <div className={styles.project_info}>
                                     <TarefasForm
-                                        handleSubmit={(updatedData) => editPost(updatedData)}
+                                        handleSubmit={editPost}
                                         btnText="Concluir edição"
-                                        responsedata={tarefas}
+                                        dadosForm={dadosForm}
+                                        titulo={dadosForm.titulo}
+                                        descricao={dadosForm.descricao}
+                                        tipo={dadosForm.tipo}
+                                        data_criacao={dadosForm.data_criacao}
+                                        data_limite={dadosForm.data_limite}
                                     />
                                 </div>
                             )}

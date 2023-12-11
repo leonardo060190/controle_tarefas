@@ -48,6 +48,7 @@ const TarefasForm = ({ btnText }) => {
       setAviso("Erro ao cadastrar tarefa!");
     }
   };
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
