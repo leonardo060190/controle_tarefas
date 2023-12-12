@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 function Usuarios() {
 
   const [usuarios, setUsuarios] = useState([]);
+  const [setUsuariosFilter] = useState([]);
   const [removeLoading, setRemoveLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
@@ -36,10 +37,10 @@ function Usuarios() {
 
   const filtrarLista = async (campos) => {
     try {
-      const lista = await api.get(`/usuarios/${campos.nome}`);
+      const lista = await api.get(`/usuarios/lista/${campos.nome}`);
       lista.data.length
       console.log("filter",lista.data)
-        ? setUsuarios(lista.data)
+        ? setUsuariosFilter(lista.data)
         : alert("Não há Usuario cadastrado com a palavra chave pesquisada");
     } catch (error) {
       alert(`Erro: ..Não foi possível obter os dados: ${error}`);

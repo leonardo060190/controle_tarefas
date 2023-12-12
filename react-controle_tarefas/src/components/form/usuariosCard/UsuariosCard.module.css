@@ -83,9 +83,15 @@ background-color: #b4f8c8;
     margin-right: 0.5em;
 }
 
-.project_card_actions a:hover,
-.project_card_actions button:hover  {
+.project_card_actions a:hover
+ {
     background-color: #222;
     color: #ffbb33;
+    
+}
+
+.project_card_actions button:hover  {
+    background-color: #222;
+    color: red;
     
 }

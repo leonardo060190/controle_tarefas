@@ -1,5 +1,5 @@
 .form {
-    width: 125%;
+    width: 100%;
     margin: 2em 0;
     
 }
@@ -49,6 +49,6 @@
 }
 
 .btn_limpa:hover {
-    color: #ffbb33;
+    color: red;
   
 }

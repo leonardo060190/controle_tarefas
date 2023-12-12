@@ -38,8 +38,31 @@ module.exports = {
             });
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    async buscaTitulo(req, res) {
+        try {
+            const [results] = await Tarefas.sequelize.query(
+                `SELECT titulo FROM tarefas WHERE titulo LIKE ? `,
+                { replacements: [`%${req.params.titulo}%`] }
+            );
+            if (!results[0]) {
+                res.status(404).json({
+                    success: false,
+                    message: "Tarefa não encontrado",
+                });
+                return;
+            }
 
-    // método que busca as tarefas referente ao titulo informado
+            res.json(results[0]);
+        } catch (error) {
+            console.error('Error fetching tasks by ID:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //método que busca as tarefas referente ao titulo informado
     async buscaId(req, res) {
         try {
             const [results] = await Tarefas.sequelize.query(

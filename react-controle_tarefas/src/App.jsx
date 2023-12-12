@@ -5,6 +5,7 @@ import Tarefas from './components/pages/tarefas/Tarefas'
 import NovaTarefa from './components/pages/novatarefa/NovaTarefa'
 import CadastroUser from './components/pages/cadastrausuario/CadastraUsuarios'
 import Usuarios from './components/pages/usuarios/Usuarios'
+import EditarUsuario from './components/pages/editeUsuario/EditeUsuario'
 //import Login from './components/pages/telaLogin/TelaLogin'
 import Navbar from './components/layout/navbar/NavBar'
 import Container from './components/layout/container/Container'
@@ -45,6 +46,10 @@ function App() {
 
         <Route path='/editartarefa/:id' element={<Container pageClass='min-height'>
           <EditarTarefa />
+        </Container>} />
+
+        <Route path='/editarusuario/:id' element={<Container pageClass='min-height'>
+          <EditarUsuario />
         </Container>} />
 
 

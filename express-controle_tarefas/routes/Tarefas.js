@@ -11,6 +11,8 @@ router.get('/tarefas', Tarefas.index)// rota para buscar todos os tarefas
 
 router.get('/tarefas/:id', Tarefas.buscaId)// rota que busca pelo titulo a tarefa relacionada
 
+router.get('/tarefas/lista/:titulo', Tarefas.buscaTitulo)
+
 router.post('/tarefas', Tarefas.store)// rota que cria uma nova tarefa
 
 router.patch('/tarefas/:titulo', Tarefas.update)// rota que altera uma tarefa pelo titulo

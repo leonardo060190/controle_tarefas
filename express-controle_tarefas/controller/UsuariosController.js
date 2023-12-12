@@ -23,31 +23,34 @@ module.exports = {
                 });
             });
     },
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // método para busca do Usuário, referente ao nome informado
     async buscaNome(req, res) {
-        await Usuarios.sequelize.query(`SELECT nome, sobrenome FROM usuarios WHERE nome LIKE ? `,
-            { replacements: [`%${req.params.nome}%`] })
-            .then(([results, metadata]) => {
-                if (results.length === 0) {
-                    res.status(404).json({
-                        success: false,
-                        message: "Usuário não encontrado",
-                    });
-                } else {
-                    res.json({
-                        success: true,
-                        Usuarios: results,
-                    });
-                }
-            }).catch((error) => {
-                res.status(500).json({
+        try {
+            const [results] = await Usuarios.sequelize.query(
+                `SELECT nome, sobrenome FROM usuarios WHERE nome LIKE ? `,
+                { replacements: [`%${req.params.nome}%`] }
+            );
+            if (!results[0]) {
+                res.status(404).json({
                     success: false,
-                    message: error.message,
+                    message: "Usuário não encontrado",
                 });
+                return;
+            }
+
+            res.json(results[0]);
+        } catch (error) {
+            console.error('Error when searching for user by ID:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message,
             });
+        }
     },
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     async buscaId(req, res) {
         try {
@@ -58,9 +61,11 @@ module.exports = {
                     nome,
                     sobrenome,
                     senha,
-                    email,
+                    email
+                FROM
+                     usuarios
                 WHERE
-                    usuarios.id = ?
+                   usuarios.id = ?
                 `,
                 { replacements: [req.params.id] }
             );

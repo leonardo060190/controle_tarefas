@@ -9,9 +9,9 @@ const router = express.Router();//importa biblioteca router do express router
 
 router.get('/usuarios', Usuarios.index)// rota para buscar todos os usuarios
 
-router.get('/usuarios/:nome', Usuarios.buscaNome)// rota que busca os usuarios pelo nome
+router.get('/usuarios/:id', Usuarios.buscaId)// rota que busca os usuarios pelo nome
 
-router.get('/usuarios/lista/:id', Usuarios.buscaId)// rota que busca os usuario
+router.get('/usuarios/lista/:nome', Usuarios.buscaNome)// rota que busca os usuario
 
 router.post('/usuarios', Usuarios.store)//rota que cria um novo usuario
 

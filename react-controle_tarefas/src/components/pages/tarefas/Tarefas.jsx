@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 function Tarefas() {
 
   const [tarefas, setTarefas] = useState([]);
+  console.log(setTarefas)
   const [removeLoading, setRemoveLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
@@ -35,9 +36,9 @@ function Tarefas() {
 
   const filtrarLista = async (campos) => {
     try {
-      const lista = await api.get(`/tarefas/${campos.titulo}`);
+      const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
       lista.data.length
-      console.log(lista)
+      console.log("filter",lista)
         ? setTarefas(lista.data)
         : alert("Não há tarefas cadastradas com a palavra chave pesquisada");
     } catch (error) {
