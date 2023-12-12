@@ -1,45 +1,42 @@
 import styles from './LoginForm.module.css'
 import LinkButton from '../../layout/linkButton/LinkButton'
+import { useState } from "react";
+import { useAuth } from '../../authProvider/AuthProvider'; // Ajuste o caminho conforme necessário
+import { api } from "../../../../config/ConfigAxios";
+
 
 function LoginForm() {
 
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [showCadastroButton, setShowCadastroButton] = useState(false);
-    // const navigate = useNavigate(); // Obtenha o objeto de histórico
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const { login } = useAuth();
 
-    // const handleEmailChange = (e) => {
-    //     setEmail(e.target.value);
-    // };
+    const handleLogin = async (e) => {
 
-    // const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value);
-    // };
+        e.preventDefault();
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
+        if (email.trim() === "" || password.trim() === "") {
+            alert("Preencha todos os campos!");
+            return;
+        }
 
-    //     // Aqui você pode adicionar a lógica de autenticação, por exemplo, enviar os dados para um servidor
-    //     // e verificar se as credenciais são válidas.
+        try {
+            const response = await api.post("/login", { email, password });
+            if (response.status === 200) {
+                login();
+            } else {
+                alert("Usuário ou senha inválidos!");
+            }
+        } catch (error) {
+            alert("Erro ao tentar logar. Tente novamente mais tarde.");
+        }
+    };
 
-    //     console.log("Email:", email);
-    //     console.log("Senha:", password);
 
-    //     // Limpar os campos de entrada após a submissão (você pode adicionar lógica adicional aqui)
-    //     setEmail("");
-    //     setPassword("");
-    // };
 
-    // const handleCadastroButtonClick = (e) => {
-    //     // Aqui você pode adicionar a lógica para navegar para a tela de cadastro
-    //     navigate.push("/cadastro");
-
-    //     // Oculta o botão de cadastro após a navegação
-    //     setShowCadastroButton(false);
-    //};
     return (
         <>
-            <form >
+            <form onSubmit={handleLogin}>
                 <div className={styles.right_login}>
                     <div className={styles.card_login}>
                         <h1>LOGIN</h1>
@@ -51,6 +48,9 @@ function LoginForm() {
                                 name="email"
                                 placeholder="E-mail"
                                 required
+                                value={email}
+                                onChange={(e) =>
+                                    setEmail(e.target.value)}
                             />
                         </div>
                         <div className={styles.text_field}>
@@ -61,12 +61,15 @@ function LoginForm() {
                                 name="password"
                                 placeholder="Senha"
                                 required
+                                value={password} 
+                                onChange={(e) => 
+                                    setPassword(e.target.value)}
                             />
                         </div>
-                        
+
                         <button className={styles.btn_login}>Login</button>
-                        
-                        <LinkButton to="/cadastroUser" text="Cadastre-se"/>
+
+                        <LinkButton to="/cadastroUser" text="Cadastre-se" />
 
                     </div>
                 </div>

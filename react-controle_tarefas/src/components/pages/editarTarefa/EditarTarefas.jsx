@@ -39,7 +39,7 @@ function EditarTarefas() {
         const formData = new FormData(e.target);
         const titulo = formData.get("titulo");
         const descricao = formData.get("descricao");
-        const tipo = formData.get("tipo");
+        const status_id = formData.get("tipo");
         const data_criacao = formData.get("data_criacao");
         const data_limite = formData.get("data_limite");
 
@@ -47,7 +47,7 @@ function EditarTarefas() {
             const response = await api.patch(`/tarefas/${id}`, {
                 titulo,
                 descricao,
-                tipo,
+                status_id,
                 data_criacao,
                 data_limite,
             });
@@ -99,11 +99,6 @@ function EditarTarefas() {
                                         handleSubmit={editPost}
                                         btnText="Concluir edição"
                                         dadosForm={dadosForm}
-                                        titulo={dadosForm.titulo}
-                                        descricao={dadosForm.descricao}
-                                        tipo={dadosForm.tipo}
-                                        data_criacao={dadosForm.data_criacao}
-                                        data_limite={dadosForm.data_limite}
                                     />
                                 </div>
                             )}
