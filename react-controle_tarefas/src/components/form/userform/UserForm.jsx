@@ -23,7 +23,7 @@ const TarefasForm = ({ btnText }) => {
             setAviso(`Usuario cadastrado com sucesso!)
               ${response.data.id}`);
             limparFormulario();
-            navigate('/login')
+            navigate('/usuarios')
 
         } catch (error) {
             setAviso("Erro ao cadastrar usuario!");

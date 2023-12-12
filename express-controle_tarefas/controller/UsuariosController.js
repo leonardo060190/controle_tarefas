@@ -48,6 +48,39 @@ module.exports = {
                 });
             });
     },
+
+    async buscaId(req, res) {
+        try {
+            const [results] = await Usuarios.sequelize.query(
+                `
+                SELECT 
+                    id,
+                    nome,
+                    sobrenome,
+                    senha,
+                    email,
+                WHERE
+                    usuarios.id = ?
+                `,
+                { replacements: [req.params.id] }
+            );
+            if (!results[0]) {
+                res.status(404).json({
+                    success: false,
+                    message: "Usuário não encontrado",
+                });
+                return;
+            }
+
+            res.json(results[0]);
+        } catch (error) {
+            console.error('Error when searching for user by ID:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // método para altera os dados que for refente os e-mail informado
@@ -146,8 +179,8 @@ module.exports = {
 
     // método para deleta o Usuário referente ao e-mail informado
     async delete(req, res) {
-        await Usuarios.sequelize.query(`DELETE FROM usuarios WHERE email = ?`,
-            { replacements: [req.params.email] })
+        await Usuarios.sequelize.query(`DELETE FROM usuarios WHERE id = ?`,
+            { replacements: [req.params.id] })
             .then(([results, metadata]) => {
                 if (metadata.affectedRows === 0) {
                     res.status(404).json({

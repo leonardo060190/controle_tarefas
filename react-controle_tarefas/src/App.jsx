@@ -4,6 +4,7 @@ import Home from './components/pages/home/Home'
 import Tarefas from './components/pages/tarefas/Tarefas'
 import NovaTarefa from './components/pages/novatarefa/NovaTarefa'
 import CadastroUser from './components/pages/cadastrausuario/CadastraUsuarios'
+import Usuarios from './components/pages/usuarios/Usuarios'
 //import Login from './components/pages/telaLogin/TelaLogin'
 import Navbar from './components/layout/navbar/NavBar'
 import Container from './components/layout/container/Container'
@@ -32,6 +33,10 @@ function App() {
 
         <Route path='/tarefas' element={<Container pageClass='min-height'>
           <Tarefas />
+        </Container>} />
+
+        <Route path='/usuarios' element={<Container pageClass='min-height'>
+          <Usuarios />
         </Container>} />
 
         <Route path='/novatarefa' element={<Container pageClass='min-height'>

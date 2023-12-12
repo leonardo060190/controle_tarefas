@@ -91,7 +91,7 @@ function Tarefas() {
           ))}
           {!removeLoading && <Loading />}
           {removeLoading && tarefas.length === 0 && (
-            <p>Não há projetos cadastrados!</p>
+            <p>Não há Tarefas cadastrados!</p>
           )}
 
 
