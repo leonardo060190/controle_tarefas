@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
 
-const TarefasForm = ({ btnText }) => {
+const TarefasForm = ({ btnText, titulo, descricao, data_criacao, data_limite, tipo}) => {
   const { register, handleSubmit, reset } = useForm();
   const [aviso, setAviso] = useState("");
   const [status, setStatus] = useState([]);
@@ -77,20 +77,20 @@ const TarefasForm = ({ btnText }) => {
       <form className={styles.form} onSubmit={handleSubmit(salvar)}>
         <div className={styles.form_control}>
           <label htmlFor="titulo">Titulo</label>
-          <input type="text" className="form-control" id="titulo" placeholder="Adicione um titulo"
+          <input type="text" className="form-control" id="titulo" value={titulo} placeholder="Adicione um titulo"
             required autoFocus {...register("titulo")} />
         </div>
         <div className={styles.form_control}>
           <label htmlFor="descricao">Descrição</label>
-          <input type="textarea" className="form-control" id="descricao" placeholder="Descreva a tarefa" 
+          <input type="textarea" className="form-control" id="descricao" value={descricao} placeholder="Descreva a tarefa" 
             required {...register("descricao")} />
         </div>
         <div className={styles.form_control}>
           <label htmlFor="status_id">Status</label>
-          <select className="form-control" id="status_id" required {...register("id_status")}>
+          <select className="form-control" id="status_id" value={tipo}   required {...register("id_status")}>
             <option value="">Selecione um Status</option>
             {status.map((status => (
-              <option key={status.id} value={status.id}>{status.tipo}</option>
+              <option key={status.id} value={status.id} >{status.tipo}</option>
             )))}
           </select>
         </div>
@@ -99,12 +99,12 @@ const TarefasForm = ({ btnText }) => {
           <div className={styles.form_control}>
             <label htmlFor="data_criacao">Data de Criação</label>
             <input type="date" className="form-control"
-              id="data_criacao" required {...register("data_criacao")}></input>
+              id="data_criacao" value={data_criacao} required {...register("data_criacao")}></input>
           </div>
           <div className={styles.form_control}>
             <label htmlFor="data_limite">Data Limite</label>
             <input type="date" className="form-control"
-              id="data_limite" required {...register("data_limite")}></input>
+              id="data_limite" value={data_limite} required {...register("data_limite")}></input>
           </div>
         </div>
         <div className={styles.aling_button}>
@@ -121,7 +121,11 @@ const TarefasForm = ({ btnText }) => {
 }
 TarefasForm.propTypes = {
   btnText: PropTypes.string.isRequired,
-
+  titulo: PropTypes.string.isRequired,
+  descricao: PropTypes.string.isRequired,
+  tipo: PropTypes.string.isRequired,
+  data_criacao: PropTypes.string.isRequired,
+  data_limite: PropTypes.string.isRequired,
 };
 
 export default TarefasForm;
