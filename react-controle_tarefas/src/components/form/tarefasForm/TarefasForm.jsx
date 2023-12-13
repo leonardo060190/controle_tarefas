@@ -8,13 +8,24 @@ import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
 
-const TarefasForm = ({ btnText}) => {
+const TarefasForm = ({ btnText, dadosForm}) => {
   const { register, handleSubmit, reset } = useForm();
   const [aviso, setAviso] = useState("");
   const [status, setStatus] = useState([]);
   const navigate = useNavigate(); 
 
-
+useEffect(() => {
+    if (dadosForm) {
+      // Set the default values for the form fields when dadosForm is defined
+      reset({
+        titulo: dadosForm.titulo,
+        descricao: dadosForm.descricao,
+        status: dadosForm.status,
+        data_criacao: dadosForm.data_criacao,
+        data_limite: dadosForm.data_limite
+      });
+    }
+  }, [dadosForm, reset]);
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -31,6 +42,8 @@ const TarefasForm = ({ btnText}) => {
     };
     fetchStatus();
   }, []);
+
+  
 
   //método chamado ao enviar form onSubmit
   const salvar = async (campos) => {
@@ -88,7 +101,7 @@ const TarefasForm = ({ btnText}) => {
         <div className={styles.form_control}>
           <label htmlFor="status_id">Status</label>
           <select className="form-control" id="status_id"    required {...register("id_status")}>
-            <option value="">Selecione um Status</option>
+            <option value=''>Selecione status</option>
             {status.map((status => (
               <option key={status.id} value={status.id} >{status.tipo}</option>
             )))}
@@ -126,6 +139,10 @@ TarefasForm.propTypes = {
   tipo: PropTypes.string.isRequired,
   data_criacao: PropTypes.string.isRequired,
   data_limite: PropTypes.string.isRequired,
+  dadosForm: PropTypes.oneOfType([
+    PropTypes.object,  // Assuming dadosForm is an object
+    PropTypes.func,    // or PropTypes.func if it should be a function
+  ]),
 };
 
 export default TarefasForm;

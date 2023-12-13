@@ -8,9 +8,9 @@ const sequelize = require('../config/db');
 const bcrypt = require('bcrypt');
 
 
-router.post('/', async (req, res) => {
-    const {email, password} = req.body;
-    console.log(email, password);
+router.post('/login', async (req, res) => {
+    const {email, senha} = req.body;
+    console.log(email, senha);
 
     try {
 
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
                 message: 'Usuário não encontrado',
             });
         }
-        const passwordEncrypt = await bcrypt.compare(password, user.password );
+        const passwordEncrypt = await bcrypt.compare(password, user.senha );
         
         if (!passwordEncrypt) {
 
@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).josn({
+        res.status(500).json({
             success: false,
             massage: error.message
         });

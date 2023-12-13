@@ -98,7 +98,7 @@ module.exports = {
                 email = ?,
                 updated_at = ? 
             WHERE 
-                email = ?`,
+                id = ?`,
             {
                 replacements: [
                     req.body.nome,
@@ -106,7 +106,7 @@ module.exports = {
                     req.body.senha,
                     req.body.email,
                     new Date(),
-                    req.params.email
+                    req.params.id
                 ]
             }
         )

@@ -6,12 +6,13 @@ import Container from '../../layout/container/Container';
 import UserForm from '../../form/userform/UserForm';
 import { api } from '../../../../config/ConfigAxios';
 
+
 function EditeUsuario() {
     const { id } = useParams();
 
     const [usuarios, setUsuarios] = useState([]);
     const [showUsuarioForm, setShowUsuarioForm] = useState(false);
-    const [dadosForm, setDadosForm] = useState(usuarios);
+    const [dadosForm, setDadosForm] = useState({});
     console.log("teste", usuarios);
     console.log("testeF", usuarios);
 
@@ -44,7 +45,7 @@ function EditeUsuario() {
        
 
         try {
-            const response = await api.patch(`/usuarios/${id}`, {
+            const response = await api.put(`/usuarios/${id}`, {
                 nome,
                 sobrenome,
                 email,
@@ -69,6 +70,7 @@ function EditeUsuario() {
                     <Container pageClass="column">
                         <div className={styles.details_container}>
                             <h1>Usuario: {usuarios.nome} {usuarios.sobrenome}</h1>
+                            
                             <button className={styles.btn} onClick={toggleUsuarioForm}>
                                 {!showUsuarioForm ? 'Editar Tarefa' : 'Fechar'}
                             </button>
@@ -90,10 +92,6 @@ function EditeUsuario() {
                                        handleSubmit={editPost}
                                         btnText="Concluir edição"
                                         dadosForm={dadosForm}
-                                        nome={dadosForm.nome}
-                                        sobrenome={dadosForm.sobrenome}
-                                        email={dadosForm.email}
-                                        senha={dadosForm.senha}
                                     
                                     />
                                 </div>

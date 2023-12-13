@@ -6,15 +6,26 @@ import SubmitButton from '../../itensFrom/button/SubmitButton';
 import styles from "./UserForm.module.css"
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
-import LinkButton  from "../../layout/linkbutton/LinkButton";
 
 
-const TarefasForm = ({ btnText }) => {
+
+const UserForm = ({ btnText, dadosForm }) => {
     const { register, handleSubmit, reset } = useForm();
     const [aviso, setAviso] = useState("");
-    const navigate = useNavigate(); 
-   
+    const navigate = useNavigate();
 
+
+    useEffect(() => {
+        if (dadosForm) {
+          // Set the default values for the form fields when dadosForm is defined
+          reset({
+            nome: dadosForm.nome,
+            sobrenome: dadosForm.sobrenome,
+            email: dadosForm.email,
+            senha: dadosForm.senha,
+          });
+        }
+      }, [dadosForm, reset]);
 
 
     //método chamado ao enviar form onSubmit
@@ -34,7 +45,7 @@ const TarefasForm = ({ btnText }) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            
+
         }, 5000);
 
         return () => clearTimeout(timer);
@@ -55,7 +66,7 @@ const TarefasForm = ({ btnText }) => {
     //aqui é o que vai ser exibido em tela
     return (
         <>
-        
+
             <form className={styles.form} onSubmit={handleSubmit(salvar)}>
                 <div className={styles.form_control}>
                     <label htmlFor="nome">Nome</label>
@@ -79,10 +90,10 @@ const TarefasForm = ({ btnText }) => {
                 </div>
 
                 <div className={styles.aling_button}>
-                    
+
                     <SubmitButton text={btnText} />
 
-                    <LinkButton to="/login" text="Retorno Login" />
+                    
 
                     <input type="reset" className={styles.btn_limpa}
                         value="Limpar Form" />
@@ -92,9 +103,12 @@ const TarefasForm = ({ btnText }) => {
         </>
     )
 }
-TarefasForm.propTypes = {
+UserForm.propTypes = {
     btnText: PropTypes.string.isRequired,
+    dadosForm: PropTypes.oneOfType([
+      PropTypes.object,  // Assuming dadosForm is an object
+      PropTypes.func,    // or PropTypes.func if it should be a function
+    ]),
+  };
 
-};
-
-export default TarefasForm;
+export default UserForm;

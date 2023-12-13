@@ -11,7 +11,7 @@ function EditarTarefas() {
 
     const [tarefas, setTarefas] = useState([]);
     const [showTarefaForm, setShowTarefaForm] = useState(false);
-    const [dadosForm, setDadosForm] = useState(tarefas);
+    const [dadosForm, setDadosForm] = useState({});
     console.log("teste", tarefas);
     console.log("testeF", tarefas);
 

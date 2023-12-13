@@ -1,5 +1,5 @@
 import styles from './LoginForm.module.css'
-import LinkButton from '../../layout/linkButton/LinkButton'
+import LinkButton from '../../layout/linkbutton/LinkButton';
 import { useState } from "react";
 import { useAuth } from '../../authProvider/AuthProvider'; // Ajuste o caminho conforme necessário
 import { api } from "../../../../config/ConfigAxios";
@@ -8,22 +8,24 @@ import { api } from "../../../../config/ConfigAxios";
 function LoginForm() {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [senha, setSenha] = useState("");
     const { login } = useAuth();
-
+console.log(email, senha);
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
-        if (email.trim() === "" || password.trim() === "") {
+        if (email.trim() === "" || senha.trim() === "") {
             alert("Preencha todos os campos!");
             return;
         }
 
         try {
-            const response = await api.post("/login", { email, password });
+            const response = await api.post("/login", { email, senha });
             if (response.status === 200) {
                 login();
+                console.log(email, senha)
+
             } else {
                 alert("Usuário ou senha inválidos!");
             }
@@ -61,9 +63,9 @@ function LoginForm() {
                                 name="password"
                                 placeholder="Senha"
                                 required
-                                value={password} 
+                                value={senha} 
                                 onChange={(e) => 
-                                    setPassword(e.target.value)}
+                                    setSenha(e.target.value)}
                             />
                         </div>
 

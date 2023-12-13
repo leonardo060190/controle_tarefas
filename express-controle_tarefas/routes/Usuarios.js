@@ -15,7 +15,7 @@ router.get('/usuarios/lista/:nome', Usuarios.buscaNome)// rota que busca os usua
 
 router.post('/usuarios', Usuarios.store)//rota que cria um novo usuario
 
-router.put('/usuarios/:email', Usuarios.update)//rota que altera os dados dos usuarios com referencia do e-mail informado
+router.put('/usuarios/:id', Usuarios.update)//rota que altera os dados dos usuarios com referencia do e-mail informado
 
 router.delete('/usuarios/:id', Usuarios.delete)// rota que deleta os usuarios com referencia do e-mail informado
 

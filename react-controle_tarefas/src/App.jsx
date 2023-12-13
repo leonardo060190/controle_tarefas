@@ -85,7 +85,7 @@ const App = () => {
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default App
