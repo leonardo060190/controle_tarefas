@@ -11,7 +11,7 @@ function LoginForm() {
     const [password, setPassword] = useState("");
     const { login } = useAuth();
 
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
@@ -36,7 +36,7 @@ function LoginForm() {
 
     return (
         <>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
                 <div className={styles.right_login}>
                     <div className={styles.card_login}>
                         <h1>LOGIN</h1>

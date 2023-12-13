@@ -46,7 +46,6 @@ const RoutesWithAuth = () => {
         </Container>} />
 
         
-
         <Route path='/usuarios' element={<Container pageClass='min-height'>
           <ProtectedRoute><Usuarios /></ProtectedRoute>
         </Container>} />
@@ -71,7 +70,7 @@ const RoutesWithAuth = () => {
 
       </Routes>
 
-       <Footer />
+      { autenticado && <Footer />}
 
     </Router>
   )
@@ -86,7 +85,7 @@ const App = () => {
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 export default App

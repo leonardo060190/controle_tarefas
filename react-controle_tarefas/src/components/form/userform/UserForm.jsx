@@ -6,6 +6,7 @@ import SubmitButton from '../../itensFrom/button/SubmitButton';
 import styles from "./UserForm.module.css"
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
+import LinkButton  from "../../layout/linkbutton/LinkButton";
 
 
 const TarefasForm = ({ btnText }) => {
@@ -54,6 +55,7 @@ const TarefasForm = ({ btnText }) => {
     //aqui é o que vai ser exibido em tela
     return (
         <>
+        
             <form className={styles.form} onSubmit={handleSubmit(salvar)}>
                 <div className={styles.form_control}>
                     <label htmlFor="nome">Nome</label>
@@ -79,6 +81,8 @@ const TarefasForm = ({ btnText }) => {
                 <div className={styles.aling_button}>
                     
                     <SubmitButton text={btnText} />
+
+                    <LinkButton to="/login" text="Retorno Login" />
 
                     <input type="reset" className={styles.btn_limpa}
                         value="Limpar Form" />

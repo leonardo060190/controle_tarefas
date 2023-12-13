@@ -14,6 +14,7 @@ function Navbar() {
                     <li className={styles.item}><Link to='/'>Home</Link></li>
                     <li className={styles.item}><Link to='/tarefas'>Tarefas</Link></li>
                     <li className={styles.item}><Link to='/usuarios'>Usuários</Link></li>
+                    <li className={styles.item}><Link to='/login'>logout</Link></li>
                 </ul>
             </Container>
 
