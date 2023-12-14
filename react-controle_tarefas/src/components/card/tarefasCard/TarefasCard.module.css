@@ -6,6 +6,7 @@
     margin: 0.5%;
     justify-content: space-between;
 }
+
 .project_card h4 {
     border-radius: 5px;
     background-color: #222;
@@ -37,21 +38,28 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: #ccc;
     margin-right: 5px;
 
 }
 
-.category_text .concluido {
-background-color: #d40326;
+.category_text_Concluido {
+    background-color: rgba(0, 128, 85, 0.637);
 }
 
-.category_text .design {
-background-color: #a0e7e5;
+.category_text_Em_Andamento {
+    background-color: rgba(0, 0, 255, 0.589);
 }
 
-.category_text .desenvolvimento {
-background-color: #b4f8c8;
+.category_text_Aguardando {
+    background-color: rgba(205, 169, 50, 0.671);
+}
+
+.category_text_Cancelado {
+    background-color: rgba(204, 12, 12, 0.767);
+}
+
+.category_text_Em_Teste {
+    background-color: rgba(50, 148, 205, 0.671);
 }
 
 .project_card_actions {
@@ -83,15 +91,14 @@ background-color: #b4f8c8;
     margin-right: 0.5em;
 }
 
-.project_card_actions a:hover
- {
+.project_card_actions a:hover {
     background-color: #222;
     color: #ffbb33;
-    
+
 }
 
-.project_card_actions button:hover  {
+.project_card_actions button:hover {
     background-color: #222;
     color: red;
-    
+
 }

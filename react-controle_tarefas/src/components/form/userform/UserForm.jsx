@@ -30,6 +30,9 @@ const UserForm = ({ btnText, dadosForm }) => {
 
     //método chamado ao enviar form onSubmit
     const salvar = async (campos) => {
+        if (!window.confirm(`Confirma a adição do Usuário ?`)) {
+            return;
+          }
         try {
             const response = await api.post("usuarios", campos);
             setAviso(`Usuario cadastrado com sucesso!)

@@ -68,7 +68,7 @@ function EditeUsuario() {
                 <div className={styles.project_details}>
                     <Container pageClass="column">
                         <div className={styles.details_container}>
-                            <h1>Usuario: {usuarios.nome} {usuarios.sobrenome}</h1>
+                            <h1>{usuarios.nome} {usuarios.sobrenome}</h1>
 
                             <button className={styles.btn} onClick={toggleUsuarioForm}>
                                 {!showUsuarioForm ? 'Editar Tarefa' : 'Fechar'}

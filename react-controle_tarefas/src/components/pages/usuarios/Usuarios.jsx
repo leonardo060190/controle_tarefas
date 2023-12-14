@@ -2,7 +2,7 @@ import styles from './Usuarios.module.css'
 import { useState, useEffect } from 'react';
 import LinkButton from '../../layout/linkbutton/LinkButton'
 import Container from '../../layout/container/Container'
-import UsuariosCard from '../../form/usuariosCard/UsuariosCard'
+import UsuariosCard from '../../card/usuariosCard/UsuariosCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
 //import { useForm } from 'react-hook-form'
@@ -48,7 +48,7 @@ function Usuarios() {
   // }
 
   const removeUsuario = async (id) => {
-    if (!window.confirm(`Confirma a exclusão do Usuário ${id}?`)) {
+    if (!window.confirm(`Confirma a exclusão do Usuário ?`)) {
       return;
     }
     try {

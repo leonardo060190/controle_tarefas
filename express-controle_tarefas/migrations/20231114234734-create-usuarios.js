@@ -24,7 +24,7 @@ module.exports = {
         unique: true
       },
       senha: {
-        type: Sequelize.STRING(8),
+        type: Sequelize.STRING(100),
         allowNull: false,
         unique: true
       },

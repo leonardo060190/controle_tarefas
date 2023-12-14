@@ -7,7 +7,7 @@ class usuario extends Model {
       nome: DataTypes.STRING(40),
       sobrenome: DataTypes.STRING(40),
       email: DataTypes.STRING,
-      senha: DataTypes.STRING(8),
+      senha: DataTypes.STRING(100),
       created_at: DataTypes.DATE,
       updated_at: DataTypes.DATE
     }, {

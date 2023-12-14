@@ -35,7 +35,7 @@ function TarefasCard({
         <span>data limite:</span> {dataLimiteFormatada}
       </p>
       <p className={styles.category_text}>
-        <span></span>{tipo}
+        <span className={styles[`category_text_${tipo}`]}></span>{tipo}
       </p>
       <div className={styles.project_card_actions}>
         <Link to={`/editartarefa/${id}`}>

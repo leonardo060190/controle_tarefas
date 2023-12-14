@@ -2,7 +2,7 @@ import styles from './Tarefas.module.css'
 import { useState, useEffect } from 'react';
 import LinkButton from '../../layout/linkButton/LinkButton'
 import Container from '../../layout/container/Container'
-import TarefasCard from '../../form/tarefasCard/TarefasCard'
+import TarefasCard from '../../card/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
 //import { useForm } from 'react-hook-form'
@@ -47,7 +47,7 @@ function Tarefas() {
   // }
 
   const removeTarefa = async (id, titulo) => {
-    if (!window.confirm(`Confirma a exclusão do Tarefa ${titulo}?`)) {
+    if (!window.confirm(`Confirma a exclusão do Tarefa ?`)) {
       return;
     }
     try {

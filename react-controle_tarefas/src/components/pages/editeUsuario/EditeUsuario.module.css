@@ -12,6 +12,7 @@
     background-color: #222;
     color: #ffbb33;
     padding: 0.4em;
+    border-radius: 5px;
 }
 
 .project_details span {
@@ -29,7 +30,7 @@
 }
 
 .btn {
-    background-color:  #222;
+    background-color:  #222222de;
     color: #fff;
     padding: 0.5em 1em;
     text-decoration: none;
@@ -37,6 +38,7 @@
     cursor: pointer;
     max-height: 40px;
     border: none;
+    border-radius: 5px;
 }
 
 .btn:hover {

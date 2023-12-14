@@ -47,6 +47,9 @@ useEffect(() => {
 
   //método chamado ao enviar form onSubmit
   const salvar = async (campos) => {
+     if (!window.confirm(`Confirma a criação da tarefa ?`)) {
+      return;
+    }
     try {
       const response = await api.post("tarefas", {
         ...campos,

@@ -69,7 +69,7 @@ function EditarTarefas() {
                 <div className={styles.project_details}>
                     <Container pageClass="column">
                         <div className={styles.details_container}>
-                            <h1>Tarefa: {tarefas.titulo}</h1>
+                            <h1>{tarefas.titulo}</h1>
                             <button className={styles.btn} onClick={toggleTarefaForm}>
                                 {!showTarefaForm ? 'Editar Tarefa' : 'Fechar'}
                             </button>

@@ -1,5 +1,6 @@
 .project_details {
     padding: 2em;
+    
 }
 
 .project_details h1,
@@ -12,6 +13,9 @@
     background-color: #222;
     color: #ffbb33;
     padding: 0.4em;
+    border-radius: 5px;
+    align-items: center;
+    
 }
 
 .project_details span {
@@ -29,7 +33,7 @@
 }
 
 .btn {
-    background-color:  #222;
+    background-color:  #222222de;
     color: #fff;
     padding: 0.5em 1em;
     text-decoration: none;
@@ -37,6 +41,7 @@
     cursor: pointer;
     max-height: 40px;
     border: none;
+    border-radius: 5px;
 }
 
 .btn:hover {
