@@ -1,5 +1,5 @@
 import styles from './LoginForm.module.css'
-import LinkButton from '../../layout/linkbutton/LinkButton';
+import LinkButton from '../../layout/linkButton/LinkButton';
 import { useState } from "react";
 import { useAuth } from '../../authProvider/AuthProvider'; // Ajuste o caminho conforme necessário
 import { api } from "../../../../config/ConfigAxios";
@@ -10,7 +10,8 @@ function LoginForm() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const { login } = useAuth();
-console.log(email, senha);
+    console.log(email, senha);
+    
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -63,8 +64,8 @@ console.log(email, senha);
                                 name="password"
                                 placeholder="Senha"
                                 required
-                                value={senha} 
-                                onChange={(e) => 
+                                value={senha}
+                                onChange={(e) =>
                                     setSenha(e.target.value)}
                             />
                         </div>

@@ -1,5 +1,6 @@
 const Usuarios = require('../models/usuario')//Importa o arquivo Usuarios da pasta Models
 const sequelize = require('../dataBase/index');// Importa as configurações do banco da arquivo '../dataBase/index'
+const bcrypt = require('bcrypt');
 
 module.exports = {
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +146,7 @@ module.exports = {
                 message: "Email já está cadastrado."
             });
         }
+        const senhaEncriptada = await bcrypt.hash(req.body.senha, 10);console.log(senhaEncriptada);
         await Usuarios.sequelize.query(
             `INSERT INTO usuarios (
                 nome,
@@ -160,7 +162,7 @@ module.exports = {
                     [
                         req.body.nome,
                         req.body.sobrenome,
-                        req.body.senha,
+                        senhaEncriptada,
                         req.body.email,
                         new Date(),
                         new Date()

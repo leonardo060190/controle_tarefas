@@ -31,21 +31,21 @@ const RoutesWithAuth = () => {
 
       <Routes>
 
-        <Route path='/login' element={
-          <Login />
-        } />
-        <Route path="/" element={autenticado ? <Navigate to="/tarefas" /> : 
-        <Login />} />
+        <Route path='/login' element={<Login />} />
 
-        <Route exact path='/home' element={<Container pageClass='min-height'>
+
+        <Route path="/" element={autenticado ? <Navigate to="/home" /> :
+          <Home />} />
+
+        <Route path='/home' element={<Container pageClass='min-height'>
           <ProtectedRoute><Home /></ProtectedRoute>
         </Container>} />
 
         <Route path='/tarefas' element={<Container pageClass='min-height'>
-        <ProtectedRoute><Tarefas /></ProtectedRoute>
+          <ProtectedRoute><Tarefas /></ProtectedRoute>
         </Container>} />
 
-        
+
         <Route path='/usuarios' element={<Container pageClass='min-height'>
           <ProtectedRoute><Usuarios /></ProtectedRoute>
         </Container>} />
@@ -70,7 +70,7 @@ const RoutesWithAuth = () => {
 
       </Routes>
 
-      { autenticado && <Footer />}
+      {autenticado && <Footer />}
 
     </Router>
   )
@@ -78,9 +78,9 @@ const RoutesWithAuth = () => {
 
 const App = () => {
   return (
-      <AuthProvider>
-          <RoutesWithAuth/>
-      </AuthProvider>
+    <AuthProvider>
+      <RoutesWithAuth />
+    </AuthProvider>
   );
 };
 
