@@ -26,3 +26,13 @@
 }
 
 
+.nav{
+    width: 100px;
+    height: 100px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

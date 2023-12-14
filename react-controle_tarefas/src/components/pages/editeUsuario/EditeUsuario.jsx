@@ -33,24 +33,23 @@ function EditeUsuario() {
     }, [id]);
 
 
-
     async function editPost(e) {
         e.preventDefault();
-
+    
         const formData = new FormData(e.target);
-        const nome = formData.get("nome");
-        const sobrenome = formData.get("sobrenome");
-        const email = formData.get("email");
-        const senha = formData.get("senha");
-       
-
+    
+        const dadosForm = {};
+    
+        for (const key of formData.keys()) {
+            if (formData.get(key) !== usuarios.data[key]) {
+                dadosForm[key] = formData.get(key);
+            }
+        }
+    
         try {
-            const response = await api.put(`/usuarios/${id}`, {
-                nome,
-                sobrenome,
-                email,
-                senha
-                           });
+            const response = await api.patch(`/usuarios/${id}`, {
+                data: dadosForm,
+            });
             console.log("teste3", response.data);
             setUsuarios(response.data); // Atualize o estado com os dados atualizados
             setShowUsuarioForm(!showUsuarioForm);
@@ -70,7 +69,7 @@ function EditeUsuario() {
                     <Container pageClass="column">
                         <div className={styles.details_container}>
                             <h1>Usuario: {usuarios.nome} {usuarios.sobrenome}</h1>
-                            
+
                             <button className={styles.btn} onClick={toggleUsuarioForm}>
                                 {!showUsuarioForm ? 'Editar Tarefa' : 'Fechar'}
                             </button>
@@ -79,20 +78,20 @@ function EditeUsuario() {
                                     <p>
                                         <span>E-mail: </span> {usuarios.email}
                                     </p>
-
+{/* 
                                     <p>
                                         <span>senha: </span> {usuarios.senha}
-                                    </p>
+                                    </p> */}
 
 
                                 </div>
                             ) : (
                                 <div className={styles.project_info}>
                                     <UserForm
-                                       handleSubmit={editPost}
+                                        handleSubmit={editPost}
                                         btnText="Concluir edição"
                                         dadosForm={dadosForm}
-                                    
+
                                     />
                                 </div>
                             )}

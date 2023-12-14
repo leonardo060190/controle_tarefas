@@ -31,7 +31,7 @@ const RoutesWithAuth = () => {
 
       <Routes>
 
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login state="/" />} />
 
 
         <Route path="/" element={autenticado ? <Navigate to="/home" /> :

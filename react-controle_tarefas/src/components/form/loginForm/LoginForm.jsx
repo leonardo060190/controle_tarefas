@@ -3,18 +3,20 @@ import LinkButton from '../../layout/linkButton/LinkButton';
 import { useState } from "react";
 import { useAuth } from '../../authProvider/AuthProvider'; // Ajuste o caminho conforme necessário
 import { api } from "../../../../config/ConfigAxios";
-
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
-
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const { login } = useAuth();
     console.log(email, senha);
-    
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+
 
         if (email.trim() === "" || senha.trim() === "") {
             alert("Preencha todos os campos!");
@@ -25,6 +27,7 @@ function LoginForm() {
             const response = await api.post("/login", { email, senha });
             if (response.status === 200) {
                 login();
+                navigate('/home');
                 console.log(email, senha)
 
             } else {

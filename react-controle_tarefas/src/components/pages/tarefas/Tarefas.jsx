@@ -5,7 +5,7 @@ import Container from '../../layout/container/Container'
 import TarefasCard from '../../form/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
-import { useForm } from 'react-hook-form'
+//import { useForm } from 'react-hook-form'
 
 
 
@@ -14,7 +14,7 @@ function Tarefas() {
   const [tarefas, setTarefas] = useState([]);
   console.log(setTarefas)
   const [removeLoading, setRemoveLoading] = useState(false);
-  const { register, handleSubmit } = useForm();
+  //const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     setTimeout(() => {
@@ -34,17 +34,17 @@ function Tarefas() {
   };
 
 
-  const filtrarLista = async (campos) => {
-    try {
-      const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
-      lista.data.length
-      console.log("filter", lista)
-        ? setTarefas(lista.data)
-        : alert("Não há tarefas cadastradas com a palavra chave pesquisada");
-    } catch (error) {
-      alert(`Erro: ..Não foi possível obter os dados: ${error}`);
-    }
-  }
+  // const filtrarLista = async (campos) => {
+  //   try {
+  //     const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
+  //     lista.data.length
+  //     console.log("filter", lista)
+  //       ? setTarefas(lista.data)
+  //       : alert("Não há tarefas cadastradas com a palavra chave pesquisada");
+  //   } catch (error) {
+  //     alert(`Erro: ..Não foi possível obter os dados: ${error}`);
+  //   }
+  // }
 
   const removeTarefa = async (id, titulo) => {
     if (!window.confirm(`Confirma a exclusão do Tarefa ${titulo}?`)) {
@@ -74,10 +74,10 @@ function Tarefas() {
           
           <LinkButton to="/novaTarefa" text="Criar Tarefa" />
         </div>
-        <form  onSubmit={handleSubmit(filtrarLista)}>
+        {/* <form  onSubmit={handleSubmit(filtrarLista)}>
             <input type="text" className="form-control" placeholder="Titulo" required {...register("titulo")} />
             <input type="submit" className={styles.form_control} value="Pesquisar" />
-          </form>
+          </form> */}
         <Container pageClass="start">
           {tarefas.length > 0 && tarefas.map((tarefa) => (
             <TarefasCard
@@ -89,7 +89,7 @@ function Tarefas() {
               data_criacao={tarefa.data_criacao}
               data_limite={tarefa.data_limite}
               handleRemove={removeTarefa}
-              handleSubmit={filtrarLista}
+              //handleSubmit={filtrarLista}
 
             />
           ))}

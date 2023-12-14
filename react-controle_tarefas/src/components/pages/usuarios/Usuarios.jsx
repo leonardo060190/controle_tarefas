@@ -5,7 +5,7 @@ import Container from '../../layout/container/Container'
 import UsuariosCard from '../../form/usuariosCard/UsuariosCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
-import { useForm } from 'react-hook-form'
+//import { useForm } from 'react-hook-form'
 
 
 
@@ -13,9 +13,9 @@ import { useForm } from 'react-hook-form'
 function Usuarios() {
 
   const [usuarios, setUsuarios] = useState([]);
-  const [setUsuariosFilter] = useState([]);
+  //const [setUsuariosFilter] = useState([]);
   const [removeLoading, setRemoveLoading] = useState(false);
-  const { register, handleSubmit } = useForm();
+  //const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,17 +35,17 @@ function Usuarios() {
   };
 
 
-  const filtrarLista = async (campos) => {
-    try {
-      const lista = await api.get(`/usuarios/lista/${campos.nome}`);
-      lista.data.length
-      console.log("filter",lista.data)
-        ? setUsuariosFilter(lista.data)
-        : alert("Não há Usuario cadastrado com a palavra chave pesquisada");
-    } catch (error) {
-      alert(`Erro: ..Não foi possível obter os dados: ${error}`);
-    }
-  }
+  // const filtrarLista = async (campos) => {
+  //   try {
+  //     const lista = await api.get(`/usuarios/lista/${campos.nome}`);
+  //     lista.data.length
+  //     console.log("filter",lista.data)
+  //       ? setUsuariosFilter(lista.data)
+  //       : alert("Não há Usuario cadastrado com a palavra chave pesquisada");
+  //   } catch (error) {
+  //     alert(`Erro: ..Não foi possível obter os dados: ${error}`);
+  //   }
+  // }
 
   const removeUsuario = async (id) => {
     if (!window.confirm(`Confirma a exclusão do Usuário ${id}?`)) {
@@ -65,11 +65,11 @@ function Usuarios() {
 
   return (
 
-    <div className="col-sm-5">
-      <form onSubmit={handleSubmit(filtrarLista)}>
-        <input type="text" className="form-control" placeholder="Nome" required {...register("nome")} />
-        <input type="submit" className="btn btn-primary" value="Pesquisar" />
-      </form>
+    // <div className="col-sm-5">
+    //   <form onSubmit={handleSubmit(filtrarLista)}>
+    //     <input type="text" className="form-control" placeholder="Nome" required {...register("nome")} />
+    //     <input type="submit" className="btn btn-primary" value="Pesquisar" />
+    //   </form>
 
       <div className={styles.usuario_container}>
         <div className={styles.title_container}>
@@ -86,7 +86,7 @@ function Usuarios() {
               //senha={usuario.senha}
               email={usuario.email}
               handleRemove={removeUsuario}
-              handleSubmit={filtrarLista}
+              //handleSubmit={filtrarLista}
 
             />
           ))}
@@ -96,7 +96,7 @@ function Usuarios() {
           )}
         </Container>
       </div>
-    </div>
+    //</div>
 
   )
 }

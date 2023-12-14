@@ -91,12 +91,12 @@ module.exports = {
 
     // método para altera os dados que for refente os e-mail informado
     async update(req, res) {
+        const senhaEncriptada = await bcrypt.hash(req.body.senha, 10);
         await Usuarios.sequelize.query(
             `UPDATE usuarios SET 
                 nome = ?,
                 sobrenome = ?,
                 senha = ?,
-                email = ?,
                 updated_at = ? 
             WHERE 
                 id = ?`,
@@ -104,8 +104,7 @@ module.exports = {
                 replacements: [
                     req.body.nome,
                     req.body.sobrenome,
-                    req.body.senha,
-                    req.body.email,
+                    senhaEncriptada,
                     new Date(),
                     req.params.id
                 ]
