@@ -76,7 +76,7 @@ function EditarTarefas() {
                             {!showTarefaForm ? (
                                 <div className={styles.project_info}>
                                     <p>
-                                        <span>descricao: </span> {tarefas.descricao}
+                                        <span>Descricao: </span> {tarefas.descricao}
                                     </p>
 
                                     <p>
