@@ -3,17 +3,17 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Loading from '../../layout/loading/Loading';
 import Container from '../../layout/container/Container';
-import TarefasForm from '../../form/tarefasForm/TarefasForm';
+import TarefasEditeForm from '../../editeForm/tarefasEditeForm/TarefasEditeForm';
 import { api } from '../../../../config/ConfigAxios';
 
 function EditarTarefas() {
     const { id } = useParams();
 
-    const [tarefas, setTarefas] = useState([]);
+    const [tarefas, setTarefas] = useState({});
     const [showTarefaForm, setShowTarefaForm] = useState(false);
     const [dadosForm, setDadosForm] = useState({});
     console.log("teste", tarefas);
-    console.log("testeF", tarefas);
+    console.log("testeF", dadosForm);
 
 
     useEffect(() => {
@@ -33,31 +33,17 @@ function EditarTarefas() {
 
 
 
-    async function editPost(e) {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const titulo = formData.get("titulo");
-        const descricao = formData.get("descricao");
-        const status_id = formData.get("tipo");
-        const data_criacao = formData.get("data_criacao");
-        const data_limite = formData.get("data_limite");
-
+    async function editPost(formData) {
         try {
-            const response = await api.patch(`/tarefas/${id}`, {
-                titulo,
-                descricao,
-                status_id,
-                data_criacao,
-                data_limite,
-            });
-            console.log("teste3", response.data);
-            setTarefas(response.data); // Atualize o estado com os dados atualizados
-            setShowTarefaForm(!showTarefaForm);
+          const response = await api.patch(`/tarefas/${id}`, formData);
+          console.log('Data updated successfully:', response.data);
+          setTarefas(response.data);
+          setShowTarefaForm(!showTarefaForm);
         } catch (error) {
-            alert(`Erro: Não foi possível obter os dados: ${error}`);
+          console.error('Error updating data:', error);
+          // Handle the error appropriately
         }
-    }
+      }
 
     function toggleTarefaForm() {
         setShowTarefaForm(!showTarefaForm);
@@ -95,8 +81,8 @@ function EditarTarefas() {
                                 </div>
                             ) : (
                                 <div className={styles.project_info}>
-                                    <TarefasForm
-                                        handleSubmit={editPost}
+                                    <TarefasEditeForm
+                                        handleSubmit={(data) => editPost(data)}
                                         btnText="Concluir edição"
                                         dadosForm={dadosForm}
                                     />

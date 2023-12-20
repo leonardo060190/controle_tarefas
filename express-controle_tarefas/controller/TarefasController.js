@@ -112,7 +112,7 @@ module.exports = {
                 data_limite = ?,
                 updated_at = ? 
             WHERE 
-                titulo = ?`,
+                id = ?`,
             {
                 replacements: [
                     req.body.titulo,
@@ -121,7 +121,7 @@ module.exports = {
                     req.body.data_criacao,
                     req.body.data_limite,
                     new Date(),
-                    req.params.titulo
+                    req.params.id
                 ]
             }
         )

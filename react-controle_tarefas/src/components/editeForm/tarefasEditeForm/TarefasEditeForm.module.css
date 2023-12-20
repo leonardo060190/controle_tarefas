@@ -1,0 +1,64 @@
+.form {
+    width: 100%;
+    margin: 2em 0;
+}
+
+.inputdate {
+    display:inline-flex; /* Add flex display */
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.inputdate input {
+    width: 145px; /* Adjust the width as needed */
+    margin-right: 5em; /* Add some spacing between the date inputs */
+}
+
+.btn_limpa {
+    background-color: #222222dc;
+    color: #fff;
+    padding: 0.7em 1.2em;
+    text-decoration: none;
+    transition: .5s;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn_limpa:hover {
+    color: red;
+    
+}
+
+.form_control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.form_control label {
+    margin-bottom: .6em;
+    font-weight: bold;
+}
+
+.form_control input {
+    padding: .7em;
+    border-radius: 0;
+    border: none;
+}
+
+.form_control select {
+    padding: .7em;
+    border-radius: 0;
+    border: none;
+}
+
+
+.form_control input::placeholder {
+    color: #7b7b7b;
+}
+
+.aling_button {
+    justify-content: space-between; 
+    display: flex; 
+}
+

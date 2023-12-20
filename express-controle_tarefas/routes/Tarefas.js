@@ -15,7 +15,7 @@ router.get('/tarefas/lista/:titulo', Tarefas.buscaTitulo)
 
 router.post('/tarefas', Tarefas.store)// rota que cria uma nova tarefa
 
-router.patch('/tarefas/:titulo', Tarefas.update)// rota que altera uma tarefa pelo titulo
+router.patch('/tarefas/:id', Tarefas.update)// rota que altera uma tarefa pelo titulo
 
 router.delete('/tarefas/:id', Tarefas.delete) // rota que deleta uma tarefa pelo id
 

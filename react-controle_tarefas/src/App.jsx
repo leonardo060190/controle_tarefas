@@ -11,8 +11,10 @@ import Navbar from './components/layout/navbar/NavBar'
 import Container from './components/layout/container/Container'
 import Footer from './components/layout/footer/Footer'
 import EditarTarefa from './components/pages/editarTarefa/EditarTarefas'
+
 import PropTypes from 'prop-types';
 import { AuthProvider, useAuth } from './components/authProvider/AuthProvider';
+
 
 const ProtectedRoute = ({ children }) => {
   const { autenticado } = useAuth();
@@ -66,6 +68,7 @@ const RoutesWithAuth = () => {
         <Route path="/cadastroUser" element={<Container pageClass="min-height">
           <CadastroUser />
         </Container>} />
+
 
 
       </Routes>

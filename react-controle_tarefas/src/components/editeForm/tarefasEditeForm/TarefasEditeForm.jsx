@@ -1,20 +1,28 @@
 
+import styles from './TarefasEditeForm.module.css'
 import { useForm } from "react-hook-form";
 import { api } from "../../../../config/ConfigAxios";
 import { useState, useEffect } from "react";
 import SubmitButton from '../../itensFrom/button/SubmitButton';
-import styles from "./TarefasForm.module.css"
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
 
-const TarefasForm = ({ btnText }) => {
-  const { register, handleSubmit, reset } = useForm();
-  const [aviso, setAviso] = useState("");
+const TarefasEditeForm = ({ btnText, dadosForm }) => {
+  const { register, setValue, handleSubmit } = useForm();
   const [status, setStatus] = useState([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-
+  useEffect(() => {
+    if (dadosForm) {
+      // Set the default values for the form fields when dadosForm is defined
+      setValue('titulo', dadosForm.titulo);
+      setValue('descricao', dadosForm.descricao);
+      setValue('id_status', dadosForm.id_status);
+      setValue('data_criacao', dadosForm.data_criacao);
+      setValue('data_limite', dadosForm.data_limite);
+    }
+  }, [dadosForm, setValue]);
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -32,46 +40,16 @@ const TarefasForm = ({ btnText }) => {
     fetchStatus();
   }, []);
 
-
-
-  //método chamado ao enviar form onSubmit
-  const salvar = async (campos) => {
-    if (!window.confirm(`Confirma a criação da tarefa ?`)) {
-      return;
-    }
+  const onSubmit = async (data) => {
     try {
-      const response = await api.post("tarefas", {
-        ...campos,
-        status_id: campos.id_status, // Use the registered ID
-
-      });
-      setAviso(`Tarefa cadastrada com sucesso!"
-              ${response.data.id}`);
-      limparFormulario();
-      navigate('/tarefas')
+      const response = await api.patch(`/tarefas/${dadosForm.id}`, data);
+      console.log('Data updated successfully:', response.data);
+      navigate(`/tarefas`);
+      // You might want to do something after a successful update
     } catch (error) {
-      setAviso("Erro ao cadastrar tarefa!");
+      console.error('Error updating data:', error);
+      // Handle the error appropriately
     }
-  };
-
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAviso("");
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [aviso]);
-
-
-  const limparFormulario = () => {
-    reset({
-      titulo: "",
-      descricao: "",
-      status: "",
-      data_criacao: "",
-      data_limite: ""
-    });
   };
 
 
@@ -79,7 +57,7 @@ const TarefasForm = ({ btnText }) => {
   //aqui é o que vai ser exibido em tela
   return (
     <>
-      <form className={styles.form} onSubmit={handleSubmit(salvar)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form_control}>
           <label htmlFor="titulo">Titulo</label>
           <input type="text" className="form-control" id="titulo" placeholder="Adicione um titulo"
@@ -92,10 +70,22 @@ const TarefasForm = ({ btnText }) => {
         </div>
         <div className={styles.form_control}>
           <label htmlFor="status_id">Status</label>
-          <select className="form-control" id="status_id" required {...register("id_status")}>
+          <select
+
+            className="form-control"
+            id="status_id"
+            required {...register("id_status")}>
+
             <option value=''>Selecione status</option>
-            {status.map((status => (
-              <option key={status.id} value={status.id} >{status.tipo}</option>
+
+            {status.map(((statusItem) => (
+              <option
+                key={statusItem.id}
+                value={statusItem.id}
+                selected={statusItem.id === dadosForm.id_status}
+              >
+                {statusItem.tipo}
+              </option>
             )))}
           </select>
         </div>
@@ -120,12 +110,21 @@ const TarefasForm = ({ btnText }) => {
             value="Limpar" />
         </div>
       </form>
-      <div className="alert"></div>
+
     </>
   )
 }
-TarefasForm.propTypes = {
-  btnText: PropTypes.string.isRequired
+TarefasEditeForm.propTypes = {
+  btnText: PropTypes.string.isRequired,
+  titulo: PropTypes.string.isRequired,
+  descricao: PropTypes.string.isRequired,
+  tipo: PropTypes.string.isRequired,
+  data_criacao: PropTypes.string.isRequired,
+  data_limite: PropTypes.string.isRequired,
+  dadosForm: PropTypes.oneOfType([
+    PropTypes.object,  // Assuming dadosForm is an object
+    PropTypes.func,    // or PropTypes.func if it should be a function
+  ]),
 };
 
-export default TarefasForm;
+export default TarefasEditeForm;
