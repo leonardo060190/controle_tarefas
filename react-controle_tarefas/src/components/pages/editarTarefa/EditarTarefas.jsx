@@ -6,6 +6,7 @@ import Container from '../../layout/container/Container';
 import TarefasEditeForm from '../../editeForm/tarefasEditeForm/TarefasEditeForm';
 import { api } from '../../../../config/ConfigAxios';
 
+
 function EditarTarefas() {
     const { id } = useParams();
 
@@ -35,9 +36,10 @@ function EditarTarefas() {
 
     async function editPost(formData) {
         try {
-          const response = await api.patch(`/tarefas/${id}`, formData);
+          const response = await api.put(`/tarefas/${id}`, formData);
           console.log('Data updated successfully:', response.data);
           setTarefas(response.data);
+          
           setShowTarefaForm(!showTarefaForm);
         } catch (error) {
           console.error('Error updating data:', error);

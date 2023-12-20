@@ -18,9 +18,15 @@ function TarefasCard({
     handleRemove(id);
   };
 
-  const dataCriacaoFormatada = new Date(data_criacao).toLocaleDateString();
-  const dataLimiteFormatada = new Date(data_limite).toLocaleDateString();
-
+  const dataCriacaoFormatada = new Date(data_criacao).toLocaleDateString('pt-BR', {
+    timeZone: 'UTC'  // Altere 'UTC' para o fuso horário desejado
+  });
+  
+  const dataLimiteFormatada = new Date(data_limite).toLocaleDateString('pt-BR', {
+    timeZone: 'UTC'  // Altere 'UTC' para o fuso horário desejado
+  });
+  
+ 
 
   return (
     <div className={styles.project_card}>

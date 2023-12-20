@@ -11,18 +11,24 @@ import { useNavigate } from "react-router-dom";
 const TarefasEditeForm = ({ btnText, dadosForm }) => {
   const { register, setValue, handleSubmit } = useForm();
   const [status, setStatus] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (dadosForm) {
       // Set the default values for the form fields when dadosForm is defined
       setValue('titulo', dadosForm.titulo);
       setValue('descricao', dadosForm.descricao);
-      setValue('id_status', dadosForm.id_status);
-      setValue('data_criacao', dadosForm.data_criacao);
-      setValue('data_limite', dadosForm.data_limite);
+      setValue('id_status', dadosForm.tipo);
+      setValue('data_criacao', formatDateString(dadosForm.data_criacao));
+      setValue('data_limite', formatDateString(dadosForm.data_limite));
     }
   }, [dadosForm, setValue]);
+
+  const formatDateString = (dateString) => {
+    const dateObject = new Date(dateString);
+    const formattedDate = dateObject.toISOString().split('T')[0];
+    return formattedDate;
+  };
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -42,7 +48,7 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.patch(`/tarefas/${dadosForm.id}`, data);
+      const response = await api.put(`/tarefas/${dadosForm.id}`, data);
       console.log('Data updated successfully:', response.data);
       navigate(`/tarefas`);
       // You might want to do something after a successful update
@@ -59,34 +65,38 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
     <>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form_control}>
+
           <label htmlFor="titulo">Titulo</label>
           <input type="text" className="form-control" id="titulo" placeholder="Adicione um titulo"
-            required autoFocus {...register("titulo")} />
+             autoFocus {...register("titulo")} />
         </div>
+
         <div className={styles.form_control}>
           <label htmlFor="descricao">Descrição</label>
           <input type="textarea" className="form-control" id="descricao" placeholder="Descreva a tarefa"
-            required {...register("descricao")} />
+             {...register("descricao")} />
         </div>
+
         <div className={styles.form_control}>
-          <label htmlFor="status_id">Status</label>
+          <label htmlFor="id_status">Status</label>
           <select
-
             className="form-control"
-            id="status_id"
-            required {...register("id_status")}>
+            id="id_status"
+            defaultValue={dadosForm.tipo}
+             {...register("id_status")}>
 
-            <option value=''>Selecione status</option>
+            <option value="" disabled > Selecione status </option>
 
             {status.map(((statusItem) => (
               <option
                 key={statusItem.id}
                 value={statusItem.id}
-                selected={statusItem.id === dadosForm.id_status}
+                selected={statusItem.tipo === dadosForm.tipo}
               >
                 {statusItem.tipo}
               </option>
             )))}
+            
           </select>
         </div>
 
@@ -94,13 +104,15 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
           <div className={styles.form_control}>
             <label htmlFor="data_criacao">Data de Criação</label>
             <input type="date" className="form-control"
-              id="data_criacao" required {...register("data_criacao")}></input>
+              id="data_criacao"  {...register("data_criacao")}></input>
           </div>
+
           <div className={styles.form_control}>
             <label htmlFor="data_limite">Data Limite</label>
             <input type="date" className="form-control"
-              id="data_limite" required {...register("data_limite")}></input>
+              id="data_limite"  {...register("data_limite")}></input>
           </div>
+
         </div>
         <div className={styles.aling_button}>
 
@@ -116,11 +128,6 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
 }
 TarefasEditeForm.propTypes = {
   btnText: PropTypes.string.isRequired,
-  titulo: PropTypes.string.isRequired,
-  descricao: PropTypes.string.isRequired,
-  tipo: PropTypes.string.isRequired,
-  data_criacao: PropTypes.string.isRequired,
-  data_limite: PropTypes.string.isRequired,
   dadosForm: PropTypes.oneOfType([
     PropTypes.object,  // Assuming dadosForm is an object
     PropTypes.func,    // or PropTypes.func if it should be a function
