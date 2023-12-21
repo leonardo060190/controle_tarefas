@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Loading from '../../layout/loading/Loading';
 import Container from '../../layout/container/Container';
-import UserForm from '../../form/userform/UserForm';
+import UserEditeForm from '../../editeForm/userEditeForm/UserEditeForm';
 import { api } from '../../../../config/ConfigAxios';
 
 
@@ -33,30 +33,18 @@ function EditeUsuario() {
     }, [id]);
 
 
-    async function editPost(e) {
-        e.preventDefault();
-    
-        const formData = new FormData(e.target);
-    
-        const dadosForm = {};
-    
-        for (const key of formData.keys()) {
-            if (formData.get(key) !== usuarios.data[key]) {
-                dadosForm[key] = formData.get(key);
-            }
-        }
-    
+    async function editPost(formData) {
         try {
-            const response = await api.patch(`/usuarios/${id}`, {
-                data: dadosForm,
-            });
-            console.log("teste3", response.data);
-            setUsuarios(response.data); // Atualize o estado com os dados atualizados
+            const response = await api.patch(`/usuarios/${id}`, formData);
+            console.log('Data updated successfully:', response.data);
+            setUsuarios(response.data);
             setShowUsuarioForm(!showUsuarioForm);
         } catch (error) {
-            alert(`Erro: Não foi possível obter os dados: ${error}`);
+            console.error('Error updating data:', error);
+            
         }
     }
+        
 
     function toggleUsuarioForm() {
         setShowUsuarioForm(!showUsuarioForm);
@@ -75,20 +63,16 @@ function EditeUsuario() {
                             </button>
                             {!showUsuarioForm ? (
                                 <div className={styles.project_info}>
+                                    
                                     <p>
                                         <span>E-mail: </span> {usuarios.email}
                                     </p>
-{/* 
-                                    <p>
-                                        <span>senha: </span> {usuarios.senha}
-                                    </p> */}
-
 
                                 </div>
                             ) : (
                                 <div className={styles.project_info}>
-                                    <UserForm
-                                        handleSubmit={editPost}
+                                    <UserEditeForm
+                                        handleSubmit={(data) => editPost(data)}
                                         btnText="Concluir edição"
                                         dadosForm={dadosForm}
 

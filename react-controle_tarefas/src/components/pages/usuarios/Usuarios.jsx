@@ -83,7 +83,6 @@ function Usuarios() {
               id={usuario.id}
               nome={usuario.nome}
               sobrenome={usuario.sobrenome}
-              //senha={usuario.senha}
               email={usuario.email}
               handleRemove={removeUsuario}
               //handleSubmit={filtrarLista}

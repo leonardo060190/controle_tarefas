@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
 
+
 const TarefasEditeForm = ({ btnText, dadosForm }) => {
   const { register, setValue, handleSubmit } = useForm();
   const [status, setStatus] = useState([]);
@@ -48,7 +49,7 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.put(`/tarefas/${dadosForm.id}`, data);
+      const response = await api.patch(`/tarefas/${dadosForm.id}`, data);
       console.log('Data updated successfully:', response.data);
       navigate(`/tarefas`);
       // You might want to do something after a successful update

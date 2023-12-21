@@ -42,17 +42,6 @@
 
 }
 
-.category_text .concluido {
-background-color: #d40326;
-}
-
-.category_text .design {
-background-color: #a0e7e5;
-}
-
-.category_text .desenvolvimento {
-background-color: #b4f8c8;
-}
 
 .project_card_actions {
     margin-top: 1.2em;

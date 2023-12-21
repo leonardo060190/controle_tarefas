@@ -40,27 +40,32 @@ module.exports = {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     async buscaTitulo(req, res) {
         try {
-            const [results] = await Tarefas.sequelize.query(
-                `SELECT titulo FROM tarefas WHERE titulo LIKE ? `,
-                { replacements: [`%${req.params.titulo}%`] }
-            );
-            if (!results[0]) {
-                res.status(404).json({
-                    success: false,
-                    message: "Tarefa não encontrado",
-                });
-                return;
-            }
-
-            res.json(results[0]);
-        } catch (error) {
-            console.error('Error fetching tasks by ID:', error);
-            res.status(500).json({
-                success: false,
-                message: error.message,
+          const [results] = await Tarefas.sequelize.query(
+            `SELECT titulo FROM tarefas WHERE titulo LIKE ?`,
+            { replacements: [`%${req.params.titulo}%`] }
+          );
+      
+          if (!results || results.length === 0) {
+            res.status(404).json({
+              success: false,
+              message: "Nenhuma tarefa encontrada com o título fornecido.",
+              data: [], // ou null, dependendo de como você quer lidar com isso no frontend
             });
+            return;
+          }
+      
+          // Mapeie os resultados para extrair apenas os títulos
+          const titulos = results.map((result) => result.titulo);
+      
+          res.json(titulos[0]);
+        } catch (error) {
+          console.error('Erro ao buscar tarefas por título:', error);
+          res.status(500).json({
+            success: false,
+            message: error.message,
+          });
         }
-    },
+      },
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //método que busca as tarefas referente ao titulo informado
     async buscaId(req, res) {

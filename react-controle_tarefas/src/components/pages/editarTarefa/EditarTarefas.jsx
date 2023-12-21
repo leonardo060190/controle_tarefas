@@ -36,7 +36,7 @@ function EditarTarefas() {
 
     async function editPost(formData) {
         try {
-          const response = await api.put(`/tarefas/${id}`, formData);
+          const response = await api.patch(`/tarefas/${id}`, formData);
           console.log('Data updated successfully:', response.data);
           setTarefas(response.data);
           

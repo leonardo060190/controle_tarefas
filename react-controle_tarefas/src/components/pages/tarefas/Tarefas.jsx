@@ -5,46 +5,55 @@ import Container from '../../layout/container/Container'
 import TarefasCard from '../../card/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
-//import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import Pagination from '../../layout/paginação/Pagination';
 
 
 
 function Tarefas() {
 
   const [tarefas, setTarefas] = useState([]);
-  console.log(setTarefas)
   const [removeLoading, setRemoveLoading] = useState(false);
-  //const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     setTimeout(() => {
       obterLista();
     }, 100)
-  }, []);
+  }, [currentPage]);
 
   const obterLista = async () => {
     try {
-      const lista = await api.get("/tarefas");
+      const limitePorPagina = 12;
+      const offset = (currentPage - 1) * limitePorPagina;
+  
+      const lista = await api.get(`/tarefas?_page=${currentPage}&_limit=${limitePorPagina}&_start=${offset}`);
       setTarefas(lista.data);
-      //console.log(lista)
-      setRemoveLoading(true)
+      setRemoveLoading(true);
     } catch (error) {
-      alert(`Erro: ..Não foi possível obter os dados: ${error}`);
+      alert(`Erro: Não foi possível obter os dados: ${error}`);
     }
   };
 
+  const filtrarLista = async (campos) => {
+    try {
+      const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
+      console.log("filter", lista);
 
-  // const filtrarLista = async (campos) => {
-  //   try {
-  //     const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
-  //     lista.data.length
-  //     console.log("filter", lista)
-  //       ? setTarefas(lista.data)
-  //       : alert("Não há tarefas cadastradas com a palavra chave pesquisada");
-  //   } catch (error) {
-  //     alert(`Erro: ..Não foi possível obter os dados: ${error}`);
-  //   }
-  // }
+      const resultados = lista.data.data; // Ajuste aqui para acessar a propriedade 'data' que contém os resultados
+
+      if (resultados > 0) {
+        console.log("Tipo de resultados:", resultados);
+        setTarefas(lista);
+      } else {
+        alert("Não há tarefas cadastradas com a palavra chave pesquisada");
+      }
+    } catch (error) {
+      alert(`Erro: Não foi possível obter os dados: ${error}`);
+    }
+  };
+
 
   const removeTarefa = async (id, titulo) => {
     if (!window.confirm(`Confirma a exclusão do Tarefa ?`)) {
@@ -64,45 +73,50 @@ function Tarefas() {
 
   return (
 
-   
+    <div className={styles.project_container}>
 
-     
-
-      <div className={styles.project_container}>
-        <div className={styles.title_container}>
-          <h1>Tarefas</h1>
-          
-          <LinkButton to="/novaTarefa" text="Criar Tarefa" />
-        </div>
-        {/* <form  onSubmit={handleSubmit(filtrarLista)}>
-            <input type="text" className="form-control" placeholder="Titulo" required {...register("titulo")} />
-            <input type="submit" className={styles.form_control} value="Pesquisar" />
-          </form> */}
-        <Container pageClass="start">
-          {tarefas.length > 0 && tarefas.map((tarefa) => (
-            <TarefasCard
-              key={tarefa.id}
-              id={tarefa.id}
-              titulo={tarefa.titulo}
-              descricao={tarefa.descricao}
-              tipo={tarefa.tipo}
-              data_criacao={tarefa.data_criacao}
-              data_limite={tarefa.data_limite}
-              handleRemove={removeTarefa}
-              //handleSubmit={filtrarLista}
-
-            />
-          ))}
-          {!removeLoading && <Loading />}
-          {removeLoading && tarefas.length === 0 && (
-            <p>Não há Tarefas cadastrados!</p>
-          )}
+      <form onSubmit={handleSubmit((data) => filtrarLista(data))}>
+        <input type="text" className="form-control" placeholder="Titulo" required {...register("titulo")} />
+        <input type="submit" className={styles.form_control} value="Pesquisar" />
+      </form>
 
 
+      <div className={styles.title_container}>
+        <h1>Tarefas</h1>
 
-        </Container>
+        <LinkButton to="/novaTarefa" text="Criar Tarefa" />
       </div>
-    
+
+      <Container pageClass="start">
+        {tarefas.length > 0 && tarefas.map((tarefa) => (
+          <TarefasCard
+            key={tarefa.id}
+            id={tarefa.id}
+            titulo={tarefa.titulo}
+            descricao={tarefa.descricao}
+            tipo={tarefa.tipo}
+            data_criacao={tarefa.data_criacao}
+            data_limite={tarefa.data_limite}
+            handleRemove={removeTarefa}
+            handleSubmit={filtrarLista}
+
+          />
+        ))}
+        {!removeLoading && <Loading />}
+        {removeLoading && tarefas.length === 0 && (
+          <p>Não há Tarefas cadastrados!</p>
+        )}
+
+      </Container>
+
+      <Pagination
+        totalPages={Math.ceil(tarefas.length / 12)}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+
+    </div>
+
 
   )
 }
