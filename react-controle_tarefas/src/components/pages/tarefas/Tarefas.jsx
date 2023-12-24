@@ -6,7 +6,7 @@ import TarefasCard from '../../card/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
 import { useForm } from 'react-hook-form'
-import Pagination from '../../layout/paginação/Pagination'
+import Pagination from '../../layout/paginacao/Pagination'
 import SubmitButton from '../../itensFrom/button/SubmitButton'
 
 
@@ -17,7 +17,7 @@ function Tarefas() {
   const [pesquisaResultados, setPesquisaResultados] = useState([]);
   const [pesquisaAtiva, setpesquisaAtiva] = useState(false);
   const [removeLoading, setRemoveLoading] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -57,7 +57,7 @@ function Tarefas() {
   const filtrarLista = async (campos) => {
     try {
       const response = await api.get(`/tarefas/lista/${campos.titulo}`);
-
+      
       if (!response.data.success) {
         alert(response.data.message);
         return;
@@ -68,6 +68,8 @@ function Tarefas() {
 
       setPesquisaResultados(response.data.data);
       setpesquisaAtiva(true);
+      limparFormulario();
+      
     } catch (error) {
       alert(`Erro: Não foi possível obter os dados: ${error}`);
     }
@@ -88,6 +90,12 @@ function Tarefas() {
       alert(`Erro: ..Não foi possível excluir a tarefa ${titulo}: ${error}`);
     }
   }
+
+  const limparFormulario = () => {
+    reset({
+        titulo: ""
+    });
+};
 
   const startIndex = (currentPage - 1) * 12;
   const endIndex = startIndex + 12;

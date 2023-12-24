@@ -31,20 +31,32 @@ module.exports = {
     async buscaNome(req, res) {
         try {
             const [results] = await Usuarios.sequelize.query(
-                `SELECT nome, sobrenome FROM usuarios WHERE nome LIKE ? `,
+                `SELECT nome, 
+                sobrenome, 
+                email 
+                FROM 
+                usuarios 
+                WHERE 
+                nome 
+                LIKE ? `,
                 { replacements: [`%${req.params.nome}%`] }
             );
-            if (!results[0]) {
+            if (!results || results.length === 0) {
                 res.status(404).json({
                     success: false,
-                    message: "Usuário não encontrado",
+                    message: "Nenhuma usuário encontrado com o nome fornecido.",
+                    data: [], // ou null, dependendo de como você quer lidar com isso no frontend
                 });
                 return;
             }
+            res.json({
+                success: true,
+                message: "Usuário encontrado com sucesso.",
+                data: results,
+            });
 
-            res.json(results[0]);
         } catch (error) {
-            console.error('Error when searching for user by ID:', error);
+            console.error('Erro ao buscar Usuário pelo nome:', error);
             res.status(500).json({
                 success: false,
                 message: error.message,

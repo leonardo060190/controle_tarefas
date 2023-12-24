@@ -54,7 +54,9 @@ module.exports = {
             on 
             status.id = 
             tarefas.id_status
-           WHERE titulo LIKE ?`,
+           WHERE 
+           titulo 
+           LIKE ?`,
                 { replacements: [`%${req.params.titulo}%`] }
             );
 
