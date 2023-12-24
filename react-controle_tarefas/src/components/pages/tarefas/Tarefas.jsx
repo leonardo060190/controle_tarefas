@@ -6,29 +6,47 @@ import TarefasCard from '../../card/tarefasCard/TarefasCard'
 import Loading from '../../layout/loading/Loading'
 import { api } from '../../../../config/ConfigAxios'
 import { useForm } from 'react-hook-form'
-import Pagination from '../../layout/paginação/Pagination';
+import Pagination from '../../layout/paginação/Pagination'
+import SubmitButton from '../../itensFrom/button/SubmitButton'
 
 
 
 function Tarefas() {
 
   const [tarefas, setTarefas] = useState([]);
+  const [pesquisaResultados, setPesquisaResultados] = useState([]);
+  const [pesquisaAtiva, setpesquisaAtiva] = useState(false);
   const [removeLoading, setRemoveLoading] = useState(false);
   const { register, handleSubmit } = useForm();
   const [currentPage, setCurrentPage] = useState(1);
 
+
+  console.log(tarefas)
+
+
   useEffect(() => {
     setTimeout(() => {
-      obterLista();
-    }, 100)
-  }, [currentPage]);
+      if (pesquisaAtiva) {
+        // Se a pesquisa está ativa, exibir resultados da pesquisa
+        setTarefas(pesquisaResultados);
+      } else {
+        // Se não, obter a lista completa
+        obterLista();
+      }
+    }, 100);
+  }, [currentPage, pesquisaAtiva, pesquisaResultados]);
+
+  const voltarALista = () => {
+    setpesquisaAtiva(false);
+    obterLista();
+  }
 
   const obterLista = async () => {
     try {
       const limitePorPagina = 12;
       const offset = (currentPage - 1) * limitePorPagina;
-  
-      const lista = await api.get(`/tarefas?_page=${currentPage}&_limit=${limitePorPagina}&_start=${offset}`);
+
+      const lista = await api.get(`/tarefas?_limit=${limitePorPagina}&_start=${offset}`);
       setTarefas(lista.data);
       setRemoveLoading(true);
     } catch (error) {
@@ -38,21 +56,23 @@ function Tarefas() {
 
   const filtrarLista = async (campos) => {
     try {
-      const lista = await api.get(`/tarefas/lista/${campos.titulo}`);
-      console.log("filter", lista);
+      const response = await api.get(`/tarefas/lista/${campos.titulo}`);
 
-      const resultados = lista.data.data; // Ajuste aqui para acessar a propriedade 'data' que contém os resultados
-
-      if (resultados > 0) {
-        console.log("Tipo de resultados:", resultados);
-        setTarefas(lista);
-      } else {
-        alert("Não há tarefas cadastradas com a palavra chave pesquisada");
+      if (!response.data.success) {
+        alert(response.data.message);
+        return;
       }
+
+      // Adicione este console.log para verificar os dados recebidos
+      console.log("Dados recebidos:", response.data.data);
+
+      setPesquisaResultados(response.data.data);
+      setpesquisaAtiva(true);
     } catch (error) {
       alert(`Erro: Não foi possível obter os dados: ${error}`);
     }
   };
+
 
 
   const removeTarefa = async (id, titulo) => {
@@ -69,17 +89,24 @@ function Tarefas() {
     }
   }
 
+  const startIndex = (currentPage - 1) * 12;
+  const endIndex = startIndex + 12;
+  const tarefasToDisplay = (pesquisaAtiva ? pesquisaResultados : tarefas).slice(startIndex, endIndex);
+
 
 
   return (
 
     <div className={styles.project_container}>
 
-      <form onSubmit={handleSubmit((data) => filtrarLista(data))}>
-        <input type="text" className="form-control" placeholder="Titulo" required {...register("titulo")} />
-        <input type="submit" className={styles.form_control} value="Pesquisar" />
-      </form>
+      <form className={styles.form} onSubmit={handleSubmit((data) => filtrarLista(data))}>
+        <input type="text" className={styles.form_control} placeholder="Titulo" required {...register("titulo")} />
+        <SubmitButton text='Pesquisa' />
 
+        {pesquisaAtiva && (
+          <button className={styles.button_voltar} onClick={voltarALista}>Voltar à Lista</button>
+        )}
+      </form>
 
       <div className={styles.title_container}>
         <h1>Tarefas</h1>
@@ -88,20 +115,44 @@ function Tarefas() {
       </div>
 
       <Container pageClass="start">
-        {tarefas.length > 0 && tarefas.map((tarefa) => (
-          <TarefasCard
-            key={tarefa.id}
-            id={tarefa.id}
-            titulo={tarefa.titulo}
-            descricao={tarefa.descricao}
-            tipo={tarefa.tipo}
-            data_criacao={tarefa.data_criacao}
-            data_limite={tarefa.data_limite}
-            handleRemove={removeTarefa}
-            handleSubmit={filtrarLista}
+        {pesquisaAtiva ? (
+          pesquisaResultados.length > 0 ? (
+            pesquisaResultados.map((tarefa) => (
+              <TarefasCard
+                key={tarefa.id}
+                id={tarefa.id}
+                titulo={tarefa.titulo}
+                descricao={tarefa.descricao}
+                tipo={tarefa.tipo}
+                data_criacao={tarefa.data_criacao}
+                data_limite={tarefa.data_limite}
+                handleRemove={removeTarefa}
+                handleSubmit={filtrarLista}
+              />
+            ))
+          ) : (
+            <p>Nenhum resultado encontrado.</p>
+          )
+        ) : (
+          tarefasToDisplay.length > 0 ? (
+            tarefasToDisplay.map((tarefa) => (
+              <TarefasCard
+                key={tarefa.id}
+                id={tarefa.id}
+                titulo={tarefa.titulo}
+                descricao={tarefa.descricao}
+                tipo={tarefa.tipo}
+                data_criacao={tarefa.data_criacao}
+                data_limite={tarefa.data_limite}
+                handleRemove={removeTarefa}
+                handleSubmit={filtrarLista}
+              />
+            ))
+          ) : (
+            <p>Não há Tarefas cadastrados!</p>
+          )
+        )}
 
-          />
-        ))}
         {!removeLoading && <Loading />}
         {removeLoading && tarefas.length === 0 && (
           <p>Não há Tarefas cadastrados!</p>
@@ -109,11 +160,13 @@ function Tarefas() {
 
       </Container>
 
-      <Pagination
-        totalPages={Math.ceil(tarefas.length / 12)}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {currentPage !== undefined && (
+        <Pagination
+          totalPages={Math.ceil((pesquisaAtiva ? pesquisaResultados.length : tarefas.length) / 12)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
 
     </div>
 
