@@ -6,13 +6,14 @@ import Container from '../../layout/container/Container';
 import TarefasEditeForm from '../../editeForm/tarefasEditeForm/TarefasEditeForm';
 import AtribuirForm from '../../form/atribuirForm/AtribuirForm';
 import { api } from '../../../../config/ConfigAxios';
+import ResponsavelCard from '../../card/responsavelCard/ResponsavelCard'
 
 
 function EditarTarefas() {
     const { id } = useParams();
 
     const [tarefas, setTarefas] = useState({});
-   // const [responsaveis, setResponsaveis] = useState({});
+    const [responsaveis, setResponsaveis] = useState({});
     const [showTarefaForm, setShowTarefaForm] = useState(false);
     const [showAtribuirForm, setShowAtribuirForm] = useState(false);
     const [dadosForm, setDadosForm] = useState({});
@@ -33,7 +34,24 @@ function EditarTarefas() {
         }
 
         obterTarefa();
+        obterAtribuicao()
+        
     }, [id]);
+
+    async function obterAtribuicao() {
+        try {
+          const response = await api.get(`/usuario_tarefas/${id}`);
+          console.log("teste3", response.data);
+          const responsaveis = response.data;
+          if (responsaveis.length > 0) {
+            setResponsaveis(responsaveis);
+          } else {
+            setResponsaveis([]);
+          }
+        } catch (error) {
+         `Erro: Não foi possível obter os dados`;
+        }
+      }
 
 
 
@@ -49,6 +67,20 @@ function EditarTarefas() {
             // Handle the error appropriately
         }
     }
+
+    const removeresponsavel = async (id) => {
+        if (!window.confirm(`Confirma a exclusão do Usuário ?`)) {
+          return;
+        }
+        try {
+          await api.delete(`/usuario_tarefas/${id}`);
+          //formar uma nova lista de tarefas sem a tarefa que foi excluida
+          setResponsaveis(responsaveis.filter(usuario_tarefa => usuario_tarefa.id !== id));
+    
+        } catch (error) {
+          alert(`Erro: ..Não foi possível excluir a usuário ${id}: ${error}`);
+        }
+      }
 
     
     function toggleTarefaForm() {
@@ -102,7 +134,7 @@ function EditarTarefas() {
                         <div className={styles.service_from_container}>
                             <h2>Atribuição de responsavel</h2>
                             <button className={styles.btn} onClick={toggleAtribuirForm}>
-                                {!showAtribuirForm ? 'Atribuir tarefa' : 'Fechar'}
+                                {!showAtribuirForm ? 'Atribuir responsavel' : 'Fechar'}
                             </button>
                             <div className={styles.project_info}>
                                 {showAtribuirForm && <AtribuirForm
@@ -112,9 +144,9 @@ function EditarTarefas() {
                             </div>
                             <h2>Responsáveis:</h2>
                             <Container pageClass="start">
-                                {/* {responsaveis.length > 0 &&
+                                {responsaveis.length > 0 &&
                                     responsaveis.map((responsavel) => (
-                                        <responsavelCard
+                                        <ResponsavelCard
                                             id={responsavel.id}
                                             nome={responsavel.nome}
                                             sobrenome={responsavel.sobrenome}
@@ -123,7 +155,7 @@ function EditarTarefas() {
                                             handleRemove={removeresponsavel}
                                         />
                                     ))}
-                                {responsaveis && responsaveis.length === 0 && <p>Não há serviços cadastrados</p>} */}
+                                {responsaveis && responsaveis.length === 0 && <p>Não há serviços cadastrados</p>}
 
                             </Container>
 

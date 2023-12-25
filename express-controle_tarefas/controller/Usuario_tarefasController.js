@@ -9,11 +9,9 @@ module.exports = {
         await Usuario_tarefas.sequelize.query(
             `SELECT 
                 usuarios.nome, 
-                usuarios.sobrenome, 
-                tarefas.titulo, 
-                tarefas.descricao, 
-                tarefas.data_limite,
-                status.tipo 
+                usuarios.sobrenome,
+                usuarios.email
+        
             FROM 
                 usuario_tarefas
             LEFT JOIN
@@ -22,8 +20,10 @@ module.exports = {
                 tarefas ON tarefas.id = usuario_tarefas.id_tarefa
             LEFT JOIN
                 status ON status.id = tarefas.id_status
+            WHERE id_tarefa = ?
             ORDER BY 
-                nome `)
+                nome `,
+                { replacements: [req.params.id] })
             .then(([results, metadata]) => {
                 if (results.length > 0) {
                     res.json(results);

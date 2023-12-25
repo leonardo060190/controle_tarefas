@@ -51,7 +51,7 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
             return;
         }
         try {
-            const response = await api.post("usuario_tarefas", {
+            const response = await api.post("/usuario_tarefas", {
                 ...campos,
                 id_usuario: campos.id_usuario, // Use the registered ID
                 id_tarefa: tarefaId
@@ -96,7 +96,7 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
                 <div className={styles.form_control}>
                     <label htmlFor="id_usuario">Usuário</label>
                     <select className="form-control" id="id_usuario" required {...register("id_usuario")}>
-                        <option value=''>Selecione usuario</option>
+                        <option value='' >Selecione usuario</option>
                         {usuario.map((usuario => (
                             <option key={usuario.id} value={usuario.id} >{usuario.nome}</option>
                         )))}

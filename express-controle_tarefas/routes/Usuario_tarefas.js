@@ -7,7 +7,7 @@ const router = express.Router();//importa biblioteca router do express router
 
 
 
-router.get('/usuario_tarefas', Usuarios.index)// rota para buscar todos os usuarios
+router.get('/usuario_tarefas/:id', Usuarios.index)// rota para buscar todos os usuarios
 
 router.post('/usuario_tarefas', Usuarios.store)//rota que cria um novo usuario
 
