@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Loading from '../../layout/loading/Loading';
 import Container from '../../layout/container/Container';
 import TarefasEditeForm from '../../editeForm/tarefasEditeForm/TarefasEditeForm';
+import AtribuirForm from '../../form/atribuirForm/AtribuirForm';
 import { api } from '../../../../config/ConfigAxios';
 
 
@@ -11,7 +12,9 @@ function EditarTarefas() {
     const { id } = useParams();
 
     const [tarefas, setTarefas] = useState({});
+   // const [responsaveis, setResponsaveis] = useState({});
     const [showTarefaForm, setShowTarefaForm] = useState(false);
+    const [showAtribuirForm, setShowAtribuirForm] = useState(false);
     const [dadosForm, setDadosForm] = useState({});
     console.log("teste", tarefas);
     console.log("testeF", dadosForm);
@@ -36,19 +39,24 @@ function EditarTarefas() {
 
     async function editPost(formData) {
         try {
-          const response = await api.patch(`/tarefas/${id}`, formData);
-          console.log('Data updated successfully:', response.data);
-          setTarefas(response.data);
-          
-          setShowTarefaForm(!showTarefaForm);
-        } catch (error) {
-          console.error('Error updating data:', error);
-          // Handle the error appropriately
-        }
-      }
+            const response = await api.patch(`/tarefas/${id}`, formData);
+            console.log('Data updated successfully:', response.data);
+            setTarefas(response.data);
 
+            setShowTarefaForm(!showTarefaForm);
+        } catch (error) {
+            console.error('Error updating data:', error);
+            // Handle the error appropriately
+        }
+    }
+
+    
     function toggleTarefaForm() {
         setShowTarefaForm(!showTarefaForm);
+    }
+
+    function toggleAtribuirForm() {
+        setShowAtribuirForm(!showAtribuirForm)
     }
 
     return (
@@ -90,6 +98,36 @@ function EditarTarefas() {
                                     />
                                 </div>
                             )}
+                        </div>
+                        <div className={styles.service_from_container}>
+                            <h2>Atribuição de responsavel</h2>
+                            <button className={styles.btn} onClick={toggleAtribuirForm}>
+                                {!showAtribuirForm ? 'Atribuir tarefa' : 'Fechar'}
+                            </button>
+                            <div className={styles.project_info}>
+                                {showAtribuirForm && <AtribuirForm
+                                    btnText='Atribuir tarefa'
+                                    dadosForm={dadosForm}
+                                />}
+                            </div>
+                            <h2>Responsáveis:</h2>
+                            <Container pageClass="start">
+                                {/* {responsaveis.length > 0 &&
+                                    responsaveis.map((responsavel) => (
+                                        <responsavelCard
+                                            id={responsavel.id}
+                                            nome={responsavel.nome}
+                                            sobrenome={responsavel.sobrenome}
+                                            email={responsavel.email}
+                                            Key={responsavel.id}
+                                            handleRemove={removeresponsavel}
+                                        />
+                                    ))}
+                                {responsaveis && responsaveis.length === 0 && <p>Não há serviços cadastrados</p>} */}
+
+                            </Container>
+
+
                         </div>
                     </Container>
                 </div>
