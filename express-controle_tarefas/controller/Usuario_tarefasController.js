@@ -46,6 +46,23 @@ module.exports = {
 
     //método para que insere um novo Usuário na tabela
     async store(req, res) {
+        const idUsuario = req.body.id_usuario;
+        const idTarefa = req.body.id_tarefa;
+    
+        // Verifica se já existe uma entrada com o mesmo ID de usuário e ID de tarefa
+        const exists = await Usuario_tarefas.findOne({
+            where: {
+                id_usuario: idUsuario,
+                id_tarefa: idTarefa
+            }
+        });
+    
+        if (exists) {
+            return res.status(400).json({
+                success: false,
+                message: "Essa associação já existe",
+            });
+        }
 
         await Usuario_tarefas.sequelize.query(
             `INSERT INTO usuario_tarefas (
