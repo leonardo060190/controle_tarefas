@@ -17,15 +17,11 @@ function EditarTarefas() {
     const [showTarefaForm, setShowTarefaForm] = useState(false);
     const [showAtribuirForm, setShowAtribuirForm] = useState(false);
     const [dadosForm, setDadosForm] = useState({});
-    console.log("teste", tarefas);
-    console.log("testeF", dadosForm);
-
 
     useEffect(() => {
         async function obterTarefa() {
             try {
                 const response = await api.get(`/tarefas/${id}`);
-                console.log("teste3", response.data);
                 setTarefas(response.data);
                 setDadosForm(response.data);
             } catch (error) {
@@ -41,7 +37,6 @@ function EditarTarefas() {
     async function obterAtribuicao() {
         try {
           const response = await api.get(`/usuario_tarefas/${id}`);
-          console.log("teste3", response.data);
           const responsaveis = response.data;
           if (responsaveis.length > 0) {
             setResponsaveis(responsaveis);
@@ -68,19 +63,9 @@ function EditarTarefas() {
         }
     }
 
-    const removeresponsavel = async (id) => {
-        if (!window.confirm(`Confirma a exclusão do Usuário ?`)) {
-          return;
-        }
-        try {
-          await api.delete(`/usuario_tarefas/${id}`);
-          //formar uma nova lista de tarefas sem a tarefa que foi excluida
-          setResponsaveis(responsaveis.filter(usuario_tarefa => usuario_tarefa.id !== id));
-    
-        } catch (error) {
-          alert(`Erro: ..Não foi possível excluir a usuário ${id}: ${error}`);
-        }
-      }
+    const handleRemoveResponsavel = (id) => {
+        setResponsaveis((responsaveis) => responsaveis.filter((responsavel) => responsavel.id !== id));
+      };
 
     
     function toggleTarefaForm() {
@@ -138,7 +123,7 @@ function EditarTarefas() {
                             </button>
                             <div className={styles.project_info}>
                                 {showAtribuirForm && <AtribuirForm
-                                    btnText='Atribuir tarefa'
+                                    btnText='Atribuir responsável'
                                     dadosForm={dadosForm}
                                 />}
                             </div>
@@ -152,7 +137,7 @@ function EditarTarefas() {
                                             sobrenome={responsavel.sobrenome}
                                             email={responsavel.email}
                                             Key={responsavel.id}
-                                            handleRemove={removeresponsavel}
+                                            handleRemove={handleRemoveResponsavel}
                                         />
                                     ))}
                                 {responsaveis && responsaveis.length === 0 && <p>Não há serviços cadastrados</p>}

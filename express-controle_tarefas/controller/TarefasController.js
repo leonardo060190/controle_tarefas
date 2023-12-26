@@ -178,9 +178,10 @@ module.exports = {
                 id_status,
                 data_criacao,
                 data_limite,
-                updated_at
+                updated_at,
+                created_at
                 )
-            VALUES (?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?, ?)`,
             {
                 replacements:
                     [
@@ -189,6 +190,7 @@ module.exports = {
                         req.body.id_status,
                         req.body.data_criacao,
                         req.body.data_limite,
+                        new Date(),
                         new Date()
 
                     ]

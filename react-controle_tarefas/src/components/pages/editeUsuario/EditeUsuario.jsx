@@ -13,15 +13,13 @@ function EditeUsuario() {
     const [usuarios, setUsuarios] = useState([]);
     const [showUsuarioForm, setShowUsuarioForm] = useState(false);
     const [dadosForm, setDadosForm] = useState({});
-    console.log("teste", usuarios);
-    console.log("testeF", usuarios);
+   
 
 
     useEffect(() => {
         async function obterUsuario() {
             try {
                 const response = await api.get(`/usuarios/${id}`);
-                console.log("teste3", response.data);
                 setUsuarios(response.data);
                 setDadosForm(response.data);
             } catch (error) {

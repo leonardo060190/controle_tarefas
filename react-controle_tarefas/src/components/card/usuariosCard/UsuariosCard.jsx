@@ -7,7 +7,6 @@ function UsuariosCard({
   id,
   nome,
   sobrenome,
-  //senha,
   email,
   handleRemove
 }) {
@@ -23,10 +22,6 @@ function UsuariosCard({
       <p>
         <span>E-mail: </span> {email}
       </p>
-      {/* <p>
-        <span>Senha: </span> {senha}
-      </p> */}
-      
       <div className={styles.project_card_actions}>
         <Link to={`/editarusuario/${id}`}>
           <BsPencil /> Editar

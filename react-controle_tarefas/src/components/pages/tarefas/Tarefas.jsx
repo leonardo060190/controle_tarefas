@@ -21,8 +21,6 @@ function Tarefas() {
   const [currentPage, setCurrentPage] = useState(1);
 
 
-  console.log(tarefas)
-
 
   useEffect(() => {
     setTimeout(() => {

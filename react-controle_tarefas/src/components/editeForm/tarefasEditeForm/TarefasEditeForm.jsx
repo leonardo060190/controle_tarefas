@@ -83,7 +83,7 @@ const TarefasEditeForm = ({ btnText, dadosForm }) => {
           <select
             className="form-control"
             id="id_status"
-            defaultValue={dadosForm.tipo}
+            //defaultValue={dadosForm.tipo}
              {...register("id_status")}>
 
             <option value="" disabled > Selecione status </option>

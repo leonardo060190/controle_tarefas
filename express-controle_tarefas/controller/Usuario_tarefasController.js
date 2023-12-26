@@ -8,6 +8,7 @@ module.exports = {
     async index(req, res) {
         await Usuario_tarefas.sequelize.query(
             `SELECT 
+                usuario_tarefas.id,
                 usuarios.nome, 
                 usuarios.sobrenome,
                 usuarios.email
@@ -23,7 +24,7 @@ module.exports = {
             WHERE id_tarefa = ?
             ORDER BY 
                 nome `,
-                { replacements: [req.params.id] })
+            { replacements: [req.params.id] })
             .then(([results, metadata]) => {
                 if (results.length > 0) {
                     res.json(results);
@@ -43,59 +44,24 @@ module.exports = {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // método para altera os dados que for refente os e-mail informado
-    async update(req, res) {
-        await Usuario_tarefas.sequelize.query(
-            `UPDATE 
-                usuario_tarefas SET 
-                id_usuario = ?,
-                id_tarefa = ?
-            WHERE 
-                id = ?`,
-                {
-                replacements: [
-                    req.body.id_usuario,
-                    req.body.id_tarefa,
-                    req.params.id
-                ]
-            }
-        )
-            .then(([results, metadata]) => {
-                if (metadata.affectedRows === 0) {
-                    res.status(404).json({
-                        success: false,
-                        message: "id não encontrado",
-                    });
-                } else {
-                    res.json({
-                        success: true,
-                        message: "Cadastro atualizado com sucesso",
-                    });
-                }
-            }).catch((error) => {
-                res.status(500).json({
-                    success: false,
-                    message: error.message,
-                });
-            });
-
-    },
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
     //método para que insere um novo Usuário na tabela
     async store(req, res) {
 
         await Usuario_tarefas.sequelize.query(
             `INSERT INTO usuario_tarefas (
                 id_usuario,
-                id_tarefa
+                id_tarefa, 
+                updated_at,
+                created_at
             )
-                VALUES (?, ?)`,
+                VALUES (?, ?, ?, ?)`,
             {
                 replacements:
                     [
                         req.body.id_usuario,
-                        req.body.id_tarefa
+                        req.body.id_tarefa,
+                        new Date(),
+                        new Date()
                     ]
 
             }
@@ -113,5 +79,29 @@ module.exports = {
             });
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    async delete(req, res) {
+        await Usuario_tarefas.sequelize.query(`DELETE FROM usuario_tarefas WHERE id = ?`,
+            { replacements: [req.params.id] })
+            .then(([results, metadata]) => {
+                if (metadata.affectedRows === 0) {
+                    res.status(404).json({
+                        success: false,
+                        message: "Responsável não encontrado",
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        message: "Resposável deletado com sucesso",
+                    });
+                }
+            }).catch((error) => {
+                res.status(500).json({
+                    success: false,
+                    message: error.message,
+                });
+            })
+    }
+
 
 };//fim do export

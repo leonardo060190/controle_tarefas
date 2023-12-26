@@ -2,6 +2,8 @@
 import styles from './ResponsavelCard.module.css';
 import { BsFillTrashFill } from 'react-icons/bs';
 import PropTypes from 'prop-types';
+import { api } from '../../../../config/ConfigAxios';
+
 
 function ResponsavelCard({
   id,
@@ -11,9 +13,18 @@ function ResponsavelCard({
   handleRemove
 }) {
 
-  const remove = (e) => {
-    e.preventDefault();
-    handleRemove(id);
+  const removeresponsavel = async () => {
+    if (!window.confirm(`Confirma a exclusão do Responsável ?`)) {
+      return;
+    }
+  
+    try {
+      await api.delete(`/usuario_tarefas/${id}`);
+      // Atualize a lista de responsáveis usando uma função de callback
+      handleRemove(id);
+    } catch (error) {
+      alert(`Erro: Não foi possível excluir o responsável ${id}: ${error}`);
+    }
   };
 
   return (
@@ -23,7 +34,7 @@ function ResponsavelCard({
         <span>E-mail: </span> {email}
       </p>
       <div className={styles.project_card_actions}>
-        <button onClick={remove}>
+        <button onClick={removeresponsavel}>
           <BsFillTrashFill /> Excluir
         </button>
       </div>

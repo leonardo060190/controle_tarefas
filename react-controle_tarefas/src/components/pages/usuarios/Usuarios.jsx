@@ -20,7 +20,6 @@ function Usuarios() {
   const { register, handleSubmit, reset } = useForm();
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(usuarios)
 
   useEffect(() => {
     setTimeout(() => {

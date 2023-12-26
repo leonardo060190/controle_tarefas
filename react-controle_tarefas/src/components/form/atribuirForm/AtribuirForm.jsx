@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const AtribuirForm = ({ btnText, dadosForm }) => {
-    const { register, setValue, handleSubmit, reset } = useForm();
+    const { register, setValue, handleSubmit } = useForm();
     const [aviso, setAviso] = useState("");
     const [usuario, setUsuario] = useState([]);
     const navigate = useNavigate();
@@ -46,7 +46,7 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
         
         const tarefaId = campos.tarefa;
 
-        console.log(campos)
+       
         if (!window.confirm(`Confirma a atribuição de tarefa ?`)) {
             return;
         }
@@ -58,7 +58,6 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
             });
             setAviso(`Tarefa cadastrada com sucesso!"
               ${response.data.id}`);
-            limparFormulario();
             navigate('/tarefas')
         } catch (error) {
             setAviso("Erro ao cadastrar tarefa!");
@@ -75,12 +74,6 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
     }, [aviso]);
 
 
-    const limparFormulario = () => {
-        reset({
-            titulo: "",
-            usuario: ""
-        });
-    };
 
 
 
@@ -89,14 +82,9 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
         <>
             <form className={styles.form} onSubmit={handleSubmit(salvar)}>
                 <div className={styles.form_control}>
-                    <label htmlFor="id_tarefa">Titulo</label>
-                    <input type="text" className="form-control" id="id_tarefa"
-                        required autoFocus {...register("id_tarefa")} />
-                </div>
-                <div className={styles.form_control}>
-                    <label htmlFor="id_usuario">Usuário</label>
+                    <label htmlFor="id_usuario">Responsável</label>
                     <select className="form-control" id="id_usuario" required {...register("id_usuario")}>
-                        <option value='' >Selecione usuario</option>
+                        <option value='' >Selecione responsável</option>
                         {usuario.map((usuario => (
                             <option key={usuario.id} value={usuario.id} >{usuario.nome}</option>
                         )))}
@@ -106,9 +94,6 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
                 <div className={styles.aling_button}>
 
                     <SubmitButton text={btnText} />
-
-                    <input type="reset" className={styles.btn_limpa}
-                        value="Limpar" />
                 </div>
             </form>
             <div className="alert"></div>

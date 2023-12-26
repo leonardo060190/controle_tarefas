@@ -11,7 +11,8 @@ router.get('/usuario_tarefas/:id', Usuarios.index)// rota para buscar todos os u
 
 router.post('/usuario_tarefas', Usuarios.store)//rota que cria um novo usuario
 
-router.put('/usuario_tarefas/:id', Usuarios.update)//rota que altera os dados dos usuarios com referencia do e-mail informado
+
+router.delete('/usuario_tarefas/:id', Usuarios.delete)//rota para deletar um responsável
 
 
 module.exports = router; // exporta as rotas para toda plicação

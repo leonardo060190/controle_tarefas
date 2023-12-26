@@ -10,7 +10,7 @@ function LoginForm() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const { login } = useAuth();
-    console.log(email, senha);
+
 
     const handleSubmit = async (e) => {
 
@@ -28,7 +28,7 @@ function LoginForm() {
             if (response.status === 200) {
                 login();
                 navigate('/home');
-                console.log(email, senha)
+
 
             } else {
                 alert("Usuário ou senha inválidos!");
