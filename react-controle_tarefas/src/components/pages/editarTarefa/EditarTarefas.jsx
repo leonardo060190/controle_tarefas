@@ -10,6 +10,7 @@ import ResponsavelCard from '../../card/responsavelCard/ResponsavelCard'
 
 
 function EditarTarefas() {
+
     const { id } = useParams();
 
     const [tarefas, setTarefas] = useState({});
@@ -31,22 +32,22 @@ function EditarTarefas() {
 
         obterTarefa();
         obterAtribuicao()
-        
+
     }, [id]);
 
     async function obterAtribuicao() {
         try {
-          const response = await api.get(`/usuario_tarefas/${id}`);
-          const responsaveis = response.data;
-          if (responsaveis.length > 0) {
-            setResponsaveis(responsaveis);
-          } else {
-            setResponsaveis([]);
-          }
+            const response = await api.get(`/usuario_tarefas/${id}`);
+            const responsaveis = response.data;
+            if (responsaveis.length > 0) {
+                setResponsaveis(responsaveis);
+            } else {
+                setResponsaveis([]);
+            }
         } catch (error) {
-         `Erro: Não foi possível obter os dados`;
+            `Erro: Não foi possível obter os dados`;
         }
-      }
+    }
 
 
 
@@ -65,9 +66,9 @@ function EditarTarefas() {
 
     const handleRemoveResponsavel = (id) => {
         setResponsaveis((responsaveis) => responsaveis.filter((responsavel) => responsavel.id !== id));
-      };
+    };
 
-    
+
     function toggleTarefaForm() {
         setShowTarefaForm(!showTarefaForm);
     }
@@ -75,6 +76,14 @@ function EditarTarefas() {
     function toggleAtribuirForm() {
         setShowAtribuirForm(!showAtribuirForm)
     }
+
+    const dataCriacaoFormatada = new Date(tarefas.data_criacao).toLocaleDateString('pt-BR', {
+        timeZone: 'UTC'  // Altere 'UTC' para o fuso horário desejado
+    });
+
+    const dataLimiteFormatada = new Date(tarefas.data_limite).toLocaleDateString('pt-BR', {
+        timeZone: 'UTC'  // Altere 'UTC' para o fuso horário desejado
+    });
 
     return (
         <>
@@ -93,11 +102,11 @@ function EditarTarefas() {
                                     </p>
 
                                     <p>
-                                        <span>Data de Criação: </span> {tarefas.data_criacao}
+                                        <span>Data de Criação: </span> {dataCriacaoFormatada}
                                     </p>
 
                                     <p>
-                                        <span>Data Limite: </span> {tarefas.data_limite}
+                                        <span>Data Limite: </span> {dataLimiteFormatada}
                                     </p>
 
                                     <p>

@@ -7,10 +7,10 @@
 
 .form {
     width: 100%;
-    margin: 1em .5em;
+    margin: 1em .5em .5em 0em;
     display: flex;
     justify-content: flex-end;
-   
+
 }
 
 .form_control {
@@ -51,7 +51,7 @@
     font-size: 15px;
     border-radius: 5px;
     display: flex;
-    height: 38px;
+    max-height: 38px;
     align-items: center;
 
 

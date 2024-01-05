@@ -60,7 +60,7 @@ const AtribuirForm = ({ btnText, dadosForm }) => {
               ${response.data.id}`);
             navigate('/tarefas')
         } catch (error) {
-            setAviso("Erro ao cadastrar tarefa!");
+            setAviso("Erro ao cadastrar tarefa!", error);
         }
     };
 

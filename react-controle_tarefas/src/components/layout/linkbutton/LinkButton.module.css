@@ -8,6 +8,7 @@
     max-height: 40px;
     border: none;
     border-radius: 5px;
+    align-items: center;
     display: flex;
     justify-content: space-between;
 }

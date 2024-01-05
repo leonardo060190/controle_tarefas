@@ -22,7 +22,7 @@ Input.propTypes = {
     text: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
-    handleOnChange: PropTypes.func, // Assuming this is a function to handle onChange
+    handleOnChange: PropTypes.func, 
     value:PropTypes.string,
 };
 

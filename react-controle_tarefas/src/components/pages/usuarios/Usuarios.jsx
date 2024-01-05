@@ -113,7 +113,7 @@ function Usuarios() {
       </form>
 
       <div className={styles.title_container}>
-        <h1>Usuarios</h1>
+        <h1>Usuários</h1>
 
         <LinkButton to="/cadastroUser" text="Adicionar Usuário" />
       </div>

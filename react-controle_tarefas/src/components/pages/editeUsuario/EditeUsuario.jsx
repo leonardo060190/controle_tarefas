@@ -57,7 +57,7 @@ function EditeUsuario() {
                             <h1>{usuarios.nome} {usuarios.sobrenome}</h1>
 
                             <button className={styles.btn} onClick={toggleUsuarioForm}>
-                                {!showUsuarioForm ? 'Editar Tarefa' : 'Fechar'}
+                                {!showUsuarioForm ? 'Editar Usuário' : 'Fechar'}
                             </button>
                             {!showUsuarioForm ? (
                                 <div className={styles.project_info}>
