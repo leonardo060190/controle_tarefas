@@ -58,21 +58,11 @@
     background-color: rgba(204, 12, 12, 0.767);
 }
 
-.category_text_Em_Espera {
-    background-color: rgba(50, 148, 205, 0.671);
-}
 
 .category_text_Pendente {
     background-color: rgba(205, 104, 50, 0.611);
 }
 
-.category_text_Aguardando_confirmação {
-    background-color: rgba(50, 205, 115, 0.671);
-}
-
-.category_text_Aguardando_aprovação {
-    background-color: rgba(161, 50, 205, 0.671);
-}
 
 .category_text_Aprovado {
     background-color: rgba(50, 179, 205, 0.671);

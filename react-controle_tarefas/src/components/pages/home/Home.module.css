@@ -28,11 +28,12 @@
     margin: 2em 0;
 }
 
-.home{
+.imagen_home{
     width: 219px;
     height: 130px;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
 }

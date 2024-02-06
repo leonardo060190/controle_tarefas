@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Container from '../container/Container';
 import styles from './Navbar.module.css'
-import logo from '../../../assets/react.svg'
+// import logo from '../../../assets/logo-controle-tarefas.png'
 
 
 function Navbar() {
@@ -14,14 +14,13 @@ function Navbar() {
     return (
         <nav className={styles.navbar}>
             <Container>
-                <Link to='/'><img className={styles.nav} src={logo} alt='Tasks' /></Link>
+                {/* <Link to='/home'><img  src={logo} alt='Tasks' /></Link> */}
+                <div className={styles.texto}> Controle Tarefas </div>
                 <ul className={styles.list}>
-                    <li className={styles.item}><Link to='/'>Home</Link></li>
+                    <li className={styles.item}><Link to='/home'>Home</Link></li>
                     <li className={styles.item}><Link to='/tarefas'>Tarefas</Link></li>
                     <li className={styles.item}><Link to='/usuarios'>Usuários</Link></li>
-                    <li className={styles.item}>
-                        <Link to='/login' onClick={handleLogout}>logout</Link>
-                    </li>
+                    <li className={styles.item}> <Link to='/login' onClick={handleLogout}>logout</Link></li>
                 </ul>
             </Container>
 

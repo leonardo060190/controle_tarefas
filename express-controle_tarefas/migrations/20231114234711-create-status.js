@@ -52,25 +52,10 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        tipo: 'Em_Espera',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
         tipo: 'Pendente',
         created_at: new Date(),
         updated_at: new Date(),
-      },
-      {
-        tipo: 'Aguardando_confirmação',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        tipo: 'Aguardando_aprovação',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
+      }
     ]);
 
      // Adicionando uma restrição UNIQUE para a coluna `user`
